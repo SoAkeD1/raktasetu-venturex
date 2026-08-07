@@ -5,6 +5,17 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>RaktaSetu | A self-sustaining blood and plasma model</title>
 <meta name="description" content="RaktaSetu funds India's blood supply chain by monetizing the surplus plasma blood banks already discard, not by selling blood.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="RaktaSetu | A self-sustaining blood and plasma model">
+<meta property="og:description" content="RaktaSetu funds India's blood supply chain by monetizing the surplus plasma blood banks already discard, not by selling blood.">
+<meta property="og:image" content="https://soaked1.github.io/raktasetu-venturex/website/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:url" content="https://soaked1.github.io/raktasetu-venturex/website/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="RaktaSetu | A self-sustaining blood and plasma model">
+<meta name="twitter:description" content="RaktaSetu funds India's blood supply chain by monetizing the surplus plasma blood banks already discard, not by selling blood.">
+<meta name="twitter:image" content="https://soaked1.github.io/raktasetu-venturex/website/og-image.png">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><circle cx=%2250%22 cy=%2250%22 r=%2242%22 fill=%22%23c81e3a%22/></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -77,6 +88,13 @@
   a{color:inherit;}
   .mono{font-family:var(--font-mono);}
 
+  .skip-link{
+    position:absolute; left:12px; top:-60px; z-index:100;
+    background:var(--accent); color:var(--accent-ink); padding:10px 16px; border-radius:8px;
+    text-decoration:none; font-size:14px; font-weight:600; transition:top .2s ease;
+  }
+  .skip-link:focus{top:12px;}
+
   /* ---- Nav ---- */
   header{
     position:sticky; top:0; z-index:40;
@@ -92,7 +110,8 @@
   .brand{display:flex; align-items:center; gap:10px; font-weight:600; font-size:16px; text-decoration:none; white-space:nowrap;}
   .brand svg{flex:none;}
   .navlinks{display:flex; gap:28px; list-style:none; margin:0; padding:0;}
-  .navlinks a{position:relative; font-size:14px; color:var(--ink-soft); text-decoration:none; transition:color .2s ease;}
+  .navlinks li{white-space:nowrap;}
+  .navlinks a{position:relative; font-size:14px; color:var(--ink-soft); text-decoration:none; transition:color .2s ease; white-space:nowrap;}
   .navlinks a:hover{color:var(--ink);}
   .navlinks a::after{
     content:''; position:absolute; left:0; right:0; bottom:-6px; height:2px;
@@ -100,6 +119,8 @@
     transition:transform .3s cubic-bezier(.16,1,.3,1);
   }
   .navlinks a:hover::after{transform:scaleX(1);}
+  .navlinks a.active{color:var(--ink);}
+  .navlinks a.active::after{transform:scaleX(1);}
   .navcta{
     font-size:14px; font-weight:600; padding:9px 16px; border-radius:8px;
     background:var(--accent); color:var(--accent-ink); text-decoration:none;
@@ -107,7 +128,35 @@
   }
   .navcta:hover{transform:translateY(-1px);}
   .navcta:active{transform:scale(.98);}
-  @media (max-width:860px){ .navlinks{display:none;} }
+  @media (max-width:1100px){
+    nav.wrap{gap:10px;}
+    .navlinks{
+      flex:1; min-width:0; overflow-x:auto; -webkit-overflow-scrolling:touch;
+      gap:18px; scrollbar-width:none; -ms-overflow-style:none;
+    }
+    .navlinks::-webkit-scrollbar{display:none;}
+    .navlinks li{flex:none;}
+  }
+  .nav-right{display:flex; align-items:center; gap:16px; flex:none;}
+  .theme-toggle{
+    width:36px; height:36px; padding:0; flex:none; border-radius:50%;
+    border:1px solid var(--line); background:transparent; cursor:pointer;
+    display:inline-flex; align-items:center; justify-content:center;
+    color:var(--ink-soft); transition:border-color .2s ease, color .2s ease;
+  }
+  .theme-toggle:hover{color:var(--ink); border-color:var(--ink-faint);}
+  .theme-toggle svg{width:17px; height:17px;}
+  .theme-toggle .icon-sun{display:none;}
+  .theme-toggle.is-dark .icon-sun{display:block;}
+  .theme-toggle.is-dark .icon-moon{display:none;}
+  .lang-toggle{
+    height:36px; padding:0 14px; flex:none; border-radius:999px;
+    border:1px solid var(--line); background:transparent; cursor:pointer;
+    font-size:13px; font-weight:600; color:var(--ink-soft);
+    transition:border-color .2s ease, color .2s ease;
+  }
+  .lang-toggle:hover{color:var(--ink); border-color:var(--ink-faint);}
+  .lang-toggle:focus-visible{outline:2px solid var(--accent); outline-offset:2px;}
 
   /* ---- Reveal ---- */
   .reveal{opacity:0; transform:translateY(16px); transition:opacity .6s cubic-bezier(.16,1,.3,1), transform .6s cubic-bezier(.16,1,.3,1);}
@@ -150,15 +199,33 @@
   @keyframes fadeUp{from{opacity:0; transform:translateY(8px);} to{opacity:1; transform:translateY(0);}}
   @media (prefers-reduced-motion: reduce){ .hero-cap{animation:none; opacity:1;} }
 
+  /* ---- TL;DR ---- */
+  .tldr{background:var(--surface-2); border-top:1px solid var(--line); border-bottom:1px solid var(--line);}
+  .tldr-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:20px 40px; padding:24px 0;}
+  @media (max-width:760px){ .tldr-grid{grid-template-columns:1fr; gap:16px;} }
+  .tldr-item{font-size:14.5px; color:var(--ink-soft); line-height:1.5;}
+  .tldr-n{font-family:var(--font-mono); font-weight:600; color:var(--accent); margin-right:8px;}
+
   /* ---- Stat strip ---- */
   .statstrip{background:var(--surface-2); border-bottom:1px solid var(--line); border-top:1px solid var(--line);}
   .stat-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:0;}
   @media (max-width:768px){ .stat-grid{grid-template-columns:1fr; } }
-  .stat{padding:40px 32px; border-left:1px solid var(--line);}
+  .stat{
+    padding:40px 32px 34px; border-left:1px solid var(--line); position:relative;
+    appearance:none; -webkit-appearance:none; background:none; border-top:none; border-right:none; border-bottom:none;
+    font:inherit; text-align:left; cursor:pointer; display:block; width:100%; margin:0;
+  }
   .stat:first-child{border-left:none;}
-  @media (max-width:768px){ .stat{border-left:none; border-top:1px solid var(--line); padding:28px 4px;} .stat:first-child{border-top:none;} }
+  @media (max-width:768px){ .stat{border-left:none; border-top:1px solid var(--line); padding:28px 4px 30px;} .stat:first-child{border-top:none;} }
   .stat .num{font-family:var(--font-mono); font-size:clamp(30px,3.4vw,40px); font-weight:600; color:var(--accent); line-height:1;}
   .stat .label{margin-top:10px; font-size:14.5px; color:var(--ink-soft); max-width:32ch;}
+  .stat .copy-hint{
+    position:absolute; left:32px; bottom:12px; font-size:11.5px; color:var(--ink-faint);
+    opacity:0; transition:opacity .2s ease;
+  }
+  @media (max-width:768px){ .stat .copy-hint{left:4px;} }
+  .stat:hover .copy-hint, .stat:focus-visible .copy-hint{opacity:1;}
+  .stat:focus-visible{outline:2px solid var(--accent); outline-offset:-2px;}
 
   /* ---- Problem narrative ---- */
   .split{display:grid; grid-template-columns:1fr 1fr; gap:64px; align-items:start;}
@@ -221,6 +288,52 @@
   .sensitivity p:last-child{margin-bottom:0;}
   .flag{font-size:12.5px; color:var(--ink-faint); font-style:italic;}
 
+  /* ---- City table ---- */
+  .city-table-wrap{overflow-x:auto; border:1px solid var(--line); border-radius:14px; background:var(--surface);}
+  .city-table{width:100%; border-collapse:collapse; min-width:640px; font-size:14px;}
+  .city-table th, .city-table td{padding:14px 18px; text-align:left; border-bottom:1px solid var(--line);}
+  .city-table thead th{font-size:12px; text-transform:uppercase; letter-spacing:.06em; color:var(--ink-faint); font-weight:600; background:var(--surface-2);}
+  .city-table tbody th{font-weight:600; color:var(--ink);}
+  .city-table tbody tr:last-child th, .city-table tbody tr:last-child td{border-bottom:none;}
+  .city-table tr.is-pick{background:color-mix(in srgb, var(--accent) 7%, transparent);}
+  .city-table tr.is-pick th{color:var(--accent);}
+
+  /* ---- Calculator ---- */
+  .calc{margin-top:28px; padding:28px 26px; border:1px solid var(--line); border-radius:16px; background:var(--surface);}
+  .calc h4{margin:0 0 10px; font-size:16.5px;}
+  .calc-intro{margin:0 0 20px; font-size:14px; color:var(--ink-soft); max-width:70ch; line-height:1.6;}
+  .calc-presets{display:flex; gap:10px; margin-bottom:24px; flex-wrap:wrap;}
+  .chip{
+    font-size:13.5px; font-weight:600; padding:8px 16px; border-radius:999px;
+    border:1px solid var(--line); background:transparent; color:var(--ink-soft); cursor:pointer;
+    transition:border-color .2s ease, color .2s ease, background .2s ease;
+  }
+  .chip:hover{border-color:var(--ink-faint); color:var(--ink);}
+  .chip.is-active{background:var(--accent); border-color:var(--accent); color:var(--accent-ink);}
+  .chip:focus-visible{outline:2px solid var(--accent); outline-offset:2px;}
+  .calc-grid{display:grid; grid-template-columns:1.3fr 1fr; gap:36px; align-items:start;}
+  @media (max-width:820px){ .calc-grid{grid-template-columns:1fr; gap:28px;} }
+  .calc-field{display:block; margin-bottom:20px;}
+  .calc-field:last-child{margin-bottom:0;}
+  .calc-label{display:flex; justify-content:space-between; gap:12px; font-size:13.5px; color:var(--ink-soft); margin-bottom:8px;}
+  .calc-label output{font-family:var(--font-mono); color:var(--ink); font-weight:600;}
+  .calc-controls input[type="range"]{
+    -webkit-appearance:none; appearance:none; width:100%; height:4px; border-radius:999px;
+    background:var(--line); outline:none; cursor:pointer;
+  }
+  .calc-controls input[type="range"]::-webkit-slider-thumb{
+    -webkit-appearance:none; width:18px; height:18px; border-radius:50%;
+    background:var(--accent); border:3px solid var(--surface); box-shadow:0 0 0 1px var(--line);
+    cursor:pointer;
+  }
+  .calc-controls input[type="range"]::-moz-range-thumb{
+    width:18px; height:18px; border-radius:50%; background:var(--accent);
+    border:3px solid var(--surface); box-shadow:0 0 0 1px var(--line); cursor:pointer;
+  }
+  .calc-controls input[type="range"]:focus-visible{outline:2px solid var(--accent); outline-offset:3px;}
+  .calc-result{background:var(--surface-2); border-radius:12px; padding:22px 22px 26px; border:1px solid var(--line);}
+  .calc-result .margin-pill{margin-top:16px;}
+
   /* ---- Compliance list ---- */
   .rulelist{border-top:1px solid var(--line);}
   .rule-row{
@@ -252,6 +365,7 @@
     transform:scale(0); transition:transform .4s cubic-bezier(.34,1.56,.64,1) calc(var(--i, 0) * 200ms + .3s);
   }
   .roadmap.in .rstep::before{transform:scale(1);}
+  .rmonth{font-size:12.5px; font-weight:600; color:var(--accent); margin-bottom:6px; letter-spacing:.02em;}
   .rstep h3{margin:0 0 8px; font-size:19px;}
   .rstep p{margin:0; font-size:15px; color:var(--ink-soft); max-width:60ch;}
   @media (prefers-reduced-motion: reduce){
@@ -266,6 +380,21 @@
   .risk-row .risk .tag{display:block; font-size:12px; text-transform:uppercase; letter-spacing:.07em; color:var(--bad); font-weight:600; margin-bottom:6px;}
   .risk-row .mit{font-size:15px; color:var(--ink-soft);}
   .risk-row .mit .tag{display:block; font-size:12px; text-transform:uppercase; letter-spacing:.07em; color:var(--good); font-weight:600; margin-bottom:6px;}
+
+  /* ---- FAQ ---- */
+  .faq-list{border-top:1px solid var(--line);}
+  .faq-item{border-bottom:1px solid var(--line);}
+  .faq-item summary{
+    list-style:none; cursor:pointer; padding:22px 0; font-size:16px; font-weight:600; color:var(--ink);
+    display:flex; justify-content:space-between; align-items:center; gap:20px;
+  }
+  .faq-item summary::-webkit-details-marker{display:none;}
+  .faq-item summary:focus-visible{outline:2px solid var(--accent); outline-offset:4px;}
+  .faq-item .chev{width:20px; height:20px; flex:none; color:var(--ink-faint); transition:transform .3s cubic-bezier(.16,1,.3,1);}
+  .faq-item .chev svg{width:100%; height:100%;}
+  .faq-item[open] .chev{transform:rotate(180deg);}
+  .faq-item p{margin:0 0 22px; font-size:15px; color:var(--ink-soft); max-width:70ch; line-height:1.6;}
+  @media (prefers-reduced-motion: reduce){ .faq-item .chev{transition:none;} }
 
   /* ---- Sources ---- */
   .sources{border-top:1px solid var(--line);}
@@ -285,24 +414,58 @@
   .ask h2{margin-bottom:12px;}
   footer{border-top:1px solid var(--line); padding:32px 0; }
   .foot-row{display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; font-size:13.5px; color:var(--ink-faint);}
+
+  /* ---- Print ---- */
+  @media print{
+    :root{
+      --bg:#ffffff; --surface:#ffffff; --surface-2:#f4f4f4; --ink:#000000;
+      --ink-soft:#333333; --ink-faint:#666666; --line:#cccccc;
+      --accent:#a3172c; --accent-ink:#ffffff; --good:#155d38; --bad:#8f2415;
+      --good-bg:#eef6f0; --bad-bg:#faeae8;
+    }
+    header, .cta-row, .navcta, .btn-ghost, footer .foot-row span:last-child{display:none !important;}
+    a{color:inherit; text-decoration:underline;}
+    .reveal, .fade-node, .margin-pill, .rn, .hero-cap, .hero-visual img{opacity:1 !important; transform:none !important; animation:none !important; transition:none !important;}
+    .roadmap::after{height:calc(100% - 8px) !important;}
+    .rstep::before{transform:scale(1) !important;}
+    section{padding:28px 0; break-inside:avoid;}
+    .hero{padding-top:0;}
+    .model-wrap, .econ-cell, .callout, .sensitivity{break-inside:avoid; border:1px solid #ccc;}
+    body{font-size:12pt;}
+    h1{font-size:22pt;}
+    h2{font-size:16pt;}
+    .wrap{max-width:100%;}
+    .sources ol{columns:1;}
+  }
 </style>
 </head>
 <body>
 
+<a class="skip-link" href="#top" data-i18n="nav.skip">Skip to main content</a>
+
 <header>
-  <nav class="wrap">
+  <nav class="wrap" aria-label="Primary">
     <a class="brand" href="#top">
-      <svg width="26" height="26" viewBox="0 0 26 26" fill="none"><circle cx="13" cy="13" r="11" stroke="var(--accent)" stroke-width="2"/><circle cx="13" cy="13" r="3.5" fill="var(--accent)"/></svg>
+      <svg width="26" height="26" viewBox="0 0 26 26" fill="none" aria-hidden="true"><circle cx="13" cy="13" r="11" stroke="var(--accent)" stroke-width="2"/><circle cx="13" cy="13" r="3.5" fill="var(--accent)"/></svg>
       RaktaSetu
     </a>
     <ul class="navlinks">
-      <li><a href="#problem">The problem</a></li>
-      <li><a href="#model">The model</a></li>
-      <li><a href="#economics">Economics</a></li>
-      <li><a href="#compliance">Compliance</a></li>
-      <li><a href="#roadmap">Roadmap</a></li>
+      <li><a href="#problem" data-i18n="nav.problem">The problem</a></li>
+      <li><a href="#model" data-i18n="nav.model">The model</a></li>
+      <li><a href="#economics" data-i18n="nav.economics">Economics</a></li>
+      <li><a href="#compliance" data-i18n="nav.compliance">Compliance</a></li>
+      <li><a href="#city" data-i18n="nav.city">Pilot city</a></li>
+      <li><a href="#roadmap" data-i18n="nav.roadmap">Roadmap</a></li>
+      <li><a href="#faq" data-i18n="nav.faq">FAQ</a></li>
     </ul>
-    <a class="navcta" href="#ask">The ask</a>
+    <div class="nav-right">
+      <button class="theme-toggle" id="themeToggle" type="button" aria-label="Switch to dark mode">
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="currentColor"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5z"/></svg>
+      </button>
+      <button class="lang-toggle" id="langToggle" type="button">हिं</button>
+      <a class="navcta" href="#ask" data-i18n="nav.ask">The ask</a>
+    </div>
   </nav>
 </header>
 
@@ -312,38 +475,51 @@
   <section class="hero">
     <div class="wrap hero-grid">
       <div>
-        <p class="kicker">VentureX 2026, Problem Statement 8</p>
-        <h1>We don't sell blood. We stop wasting its plasma.</h1>
-        <p class="sub">A hub-and-spoke model that keeps India's blood supply funded by selling only the plasma that would otherwise expire unused.</p>
+        <p class="kicker" data-i18n="hero.kicker">VentureX 2026, Problem Statement 8</p>
+        <h1 data-i18n="hero.h1">We don't sell blood. We stop wasting its plasma.</h1>
+        <p class="sub" data-i18n="hero.sub">A hub-and-spoke model that keeps India's blood supply funded by selling only the plasma that would otherwise expire unused.</p>
         <div class="cta-row">
-          <a class="btn btn-primary" href="#economics">See the unit economics</a>
-          <a class="btn btn-ghost" href="#compliance">Read the compliance case</a>
+          <a class="btn btn-primary" href="#economics" data-i18n="hero.ctaPrimary">See the unit economics</a>
+          <a class="btn btn-ghost" href="#compliance" data-i18n="hero.ctaGhost">Read the compliance case</a>
         </div>
       </div>
       <div>
         <div class="hero-visual reveal">
-          <img src="https://picsum.photos/seed/raktasetu-coldchain/900/700" alt="Cold chain storage, representative image">
+          <img src="https://picsum.photos/seed/raktasetu-coldchain/900/700" alt="Cold chain storage, representative image" data-i18n-attr="alt" data-i18n="hero.imgAlt">
         </div>
-        <p class="hero-cap mono">Frozen plasma holds its value for a year. Most of it never gets the chance.</p>
+        <p class="hero-cap mono" data-i18n="hero.cap">Frozen plasma holds its value for a year. Most of it never gets the chance.</p>
       </div>
     </div>
   </section>
 
+  <!-- TLDR -->
+  <div class="tldr">
+    <div class="wrap tldr-grid">
+      <div class="tldr-item"><span class="tldr-n">01</span><span data-i18n="tldr.1">Donors are unpaid volunteers. Patients pay the same government-capped fee. Blood is never sold.</span></div>
+      <div class="tldr-item"><span class="tldr-n">02</span><span data-i18n="tldr.2">Only plasma already unissued near its expiry date is sold, to a licensed Indian fractionator.</span></div>
+      <div class="tldr-item"><span class="tldr-n">03</span><span data-i18n="tldr.3">That alone turns a Rs 21 per unit margin into Rs 41 at private-rate centres. Government-rate centres still need hub-scale volume too.</span></div>
+      <div class="tldr-item"><span class="tldr-n">04</span><span data-i18n="tldr.4">Ask: fund one pilot hub, prove operating breakeven in twelve months, then replicate.</span></div>
+    </div>
+  </div>
+
   <!-- STAT STRIP -->
   <div class="statstrip">
     <div class="wrap stat-grid">
-      <div class="stat reveal" style="transition-delay:0ms">
+      <button type="button" class="stat reveal" style="transition-delay:0ms" data-cite="News Nation, citing national blood-bank discard data" data-cite-url="https://english.newsnationtv.com/lifestyle/health-and-fitness/6-lakh-litres-of-blood-wasted-in-five-years-in-india-serious-loopholes-in-blood-banking-system-exposed-169373.html">
         <div class="num" data-count="300000" data-prefix="" data-suffix="+">3,00,000+</div>
-        <div class="label">units of fresh frozen plasma discarded in a single reported year nationally, over half of all blood-component wastage that year</div>
-      </div>
-      <div class="stat reveal" style="transition-delay:100ms">
+        <div class="label" data-i18n="stat.1">units of fresh frozen plasma discarded in a single reported year nationally, over half of all blood-component wastage that year</div>
+        <span class="copy-hint" data-i18n="copy.hint">Click to copy with source</span>
+      </button>
+      <button type="button" class="stat reveal" style="transition-delay:100ms" data-cite="Medical Dialogues, RTI disclosure on AIIMS Nagpur's plasma sale" data-cite-url="https://medicaldialogues.in/news/health/hospital-diagnostics/aiims-nagpur-sold-over-1000-litres-of-surplus-plasma-for-rs-1644-lakh-rti-reveals-174685">
         <div class="num" data-count="1600" data-prefix="Rs " data-suffix="">Rs 1,600</div>
-        <div class="label">per litre a licensed Indian fractionator has actually paid a hospital for surplus plasma (AIIMS Nagpur, RTI-disclosed)</div>
-      </div>
-      <div class="stat reveal" style="transition-delay:200ms">
+        <div class="label" data-i18n="stat.2">per litre a licensed Indian fractionator has actually paid a hospital for surplus plasma (AIIMS Nagpur, RTI-disclosed)</div>
+        <span class="copy-hint" data-i18n="copy.hint">Click to copy with source</span>
+      </button>
+      <button type="button" class="stat reveal" style="transition-delay:200ms" data-cite="Invest India, overview of blood plasma fractionation in India" data-cite-url="https://www.investindia.gov.in/team-india-blogs/overview-blood-plasma-fractionation-india">
         <div class="num" data-count="0.5" data-decimals="1" data-prefix="~" data-suffix="M L">~0.5M L</div>
-        <div class="label">plasma available nationally for fractionation each year, roughly the rated capacity of a single Indian plant</div>
-      </div>
+        <div class="label" data-i18n="stat.3">plasma available nationally for fractionation each year, roughly the rated capacity of a single Indian plant</div>
+        <span class="copy-hint" data-i18n="copy.hint">Click to copy with source</span>
+      </button>
     </div>
   </div>
 
@@ -351,27 +527,27 @@
   <section id="problem">
     <div class="wrap">
       <div class="section-head reveal">
-        <h2>Blood banks are not badly run. They are badly funded, by design.</h2>
-        <p class="lede">The processing fee a blood centre may charge is fixed by the National Blood Transfusion Council. That ceiling is the ethical floor of the whole system and should not move. But it also means a centre cannot price its way out of a cost problem, which is exactly the problem most of them have.</p>
+        <h2 data-i18n="problem.h2">Blood banks are not badly run. They are badly funded, by design.</h2>
+        <p class="lede" data-i18n="problem.lede">The processing fee a blood centre may charge is fixed by the National Blood Transfusion Council. That ceiling is the ethical floor of the whole system and should not move. But it also means a centre cannot price its way out of a cost problem, which is exactly the problem most of them have.</p>
       </div>
       <div class="split">
         <div class="prose reveal">
-          <p>A single whole-blood donation splits into three products with completely different economics. <strong>Red cells</strong> are the clinical product everyone thinks of, priced at a government-set ceiling. <strong>Platelets</strong> last five days and are hard to plan around. <strong>Plasma</strong> is the anomaly: it freezes for about a year, is produced automatically on every donation, and hospitals clinically need far less of it than gets collected.</p>
-          <p>Most Indian blood centres are small. Nearly 4,000 of them process only a few thousand units a year each, yet the fixed costs of running a centre, the nucleic acid testing (NAT) platform that screens for HIV and hepatitis, the component-separation equipment, the cold chain, barely change with volume. Small centres absorb the same fixed cost as large ones and never reach the scale to recover it.</p>
-          <p>The result is visible in the discard data. Plasma is the component with the longest shelf life and it is still the single largest category of blood-product waste in the country, because most small centres cannot separate, freeze, and route it fast enough to reach anyone who wants it before it expires.</p>
+          <p data-i18n-html="problem.p1">A single whole-blood donation splits into three products with completely different economics. <strong>Red cells</strong> are the clinical product everyone thinks of, priced at a government-set ceiling. <strong>Platelets</strong> last five days and are hard to plan around. <strong>Plasma</strong> is the anomaly: it freezes for about a year, is produced automatically on every donation, and hospitals clinically need far less of it than gets collected.</p>
+          <p data-i18n="problem.p2">Most Indian blood centres are small. Nearly 4,000 of them process only a few thousand units a year each, yet the fixed costs of running a centre, the nucleic acid testing (NAT) platform that screens for HIV and hepatitis, the component-separation equipment, the cold chain, barely change with volume. Small centres absorb the same fixed cost as large ones and never reach the scale to recover it.</p>
+          <p data-i18n="problem.p3">The result is visible in the discard data. Plasma is the component with the longest shelf life and it is still the single largest category of blood-product waste in the country, because most small centres cannot separate, freeze, and route it fast enough to reach anyone who wants it before it expires.</p>
         </div>
         <div class="reveal">
           <div class="callout">
             <div class="k mono">Rs 1,829</div>
-            <div class="d">Fully loaded cost to process one donation with component separation and NAT testing, per a published Indian tertiary-care unit-cost study.</div>
+            <div class="d" data-i18n="problem.callout1">Fully loaded cost to process one donation with component separation and NAT testing, per a published Indian tertiary-care unit-cost study.</div>
           </div>
           <div class="callout">
             <div class="k mono">Rs 1,100 to Rs 1,550</div>
-            <div class="d">The NBTC processing-fee ceiling for a unit of red cells, government-run versus private centres. This is the only clinical revenue most centres can legally collect.</div>
+            <div class="d" data-i18n="problem.callout2">The NBTC processing-fee ceiling for a unit of red cells, government-run versus private centres. This is the only clinical revenue most centres can legally collect.</div>
           </div>
           <div class="callout">
             <div class="k mono">Rs 300</div>
-            <div class="d">The processing-fee ceiling for a unit of fresh frozen plasma issued for transfusion, capped low because clinical demand for plasma is genuinely limited.</div>
+            <div class="d" data-i18n="problem.callout3">The processing-fee ceiling for a unit of fresh frozen plasma issued for transfusion, capped low because clinical demand for plasma is genuinely limited.</div>
           </div>
         </div>
       </div>
@@ -382,11 +558,11 @@
   <section id="model" style="background:var(--surface-2); border-top:1px solid var(--line); border-bottom:1px solid var(--line);">
     <div class="wrap">
       <div class="section-head reveal">
-        <h2>The fix is not a collection app. It is where the plasma goes.</h2>
-        <p class="lede">RaktaSetu never sells blood. Donors give voluntarily and are never paid. Patients pay the same government-capped fee as anywhere else. What changes is that plasma nobody is going to transfuse gets frozen correctly and sold, under an existing NBTC-sanctioned channel, to a licensed Indian fractionator instead of expiring in a freezer.</p>
+        <h2 data-i18n="model.h2">The fix is not a collection app. It is where the plasma goes.</h2>
+        <p class="lede" data-i18n="model.lede">RaktaSetu never sells blood. Donors give voluntarily and are never paid. Patients pay the same government-capped fee as anywhere else. What changes is that plasma nobody is going to transfuse gets frozen correctly and sold, under an existing NBTC-sanctioned channel, to a licensed Indian fractionator instead of expiring in a freezer.</p>
       </div>
       <div class="model-wrap reveal">
-        <svg id="flow-svg" viewBox="0 0 900 360" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Diagram: mobile collection spokes feed a central processing hub, which routes red cells to hospitals and surplus plasma to a licensed fractionator">
+        <svg id="flow-svg" viewBox="0 0 900 360" xmlns="http://www.w3.org/2000/svg" role="img" data-i18n-attr="aria-label" data-i18n="model.diagramAria" aria-label="Diagram: mobile collection spokes feed a central processing hub, which routes red cells to hospitals and surplus plasma to a licensed fractionator">
           <defs>
             <marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
               <path d="M0,0 L8,4 L0,8 z" fill="var(--ink-faint)"/>
@@ -396,56 +572,56 @@
           <g class="fade-node" style="transition-delay:0ms" font-family="IBM Plex Sans" font-size="13" fill="var(--ink-soft)">
             <line class="flow-line" data-delay="0" x1="120" y1="70" x2="330" y2="160" stroke="var(--line)" stroke-width="2" marker-end="url(#arrow)"/>
             <circle cx="95" cy="60" r="34" fill="var(--surface)" stroke="var(--line)" stroke-width="2"/>
-            <text x="95" y="55" text-anchor="middle">College</text>
-            <text x="95" y="70" text-anchor="middle">drive</text>
+            <text x="95" y="55" text-anchor="middle" data-i18n="diagram.college1">College</text>
+            <text x="95" y="70" text-anchor="middle" data-i18n="diagram.drive">drive</text>
           </g>
           <g class="fade-node" style="transition-delay:110ms" font-family="IBM Plex Sans" font-size="13" fill="var(--ink-soft)">
             <line class="flow-line" data-delay="110" x1="110" y1="180" x2="330" y2="185" stroke="var(--line)" stroke-width="2" marker-end="url(#arrow)"/>
             <circle cx="80" cy="180" r="34" fill="var(--surface)" stroke="var(--line)" stroke-width="2"/>
-            <text x="80" y="175" text-anchor="middle">Corporate</text>
-            <text x="80" y="190" text-anchor="middle">drive</text>
+            <text x="80" y="175" text-anchor="middle" data-i18n="diagram.corporate1">Corporate</text>
+            <text x="80" y="190" text-anchor="middle" data-i18n="diagram.drive">drive</text>
           </g>
           <g class="fade-node" style="transition-delay:220ms" font-family="IBM Plex Sans" font-size="13" fill="var(--ink-soft)">
             <line class="flow-line" data-delay="220" x1="120" y1="290" x2="330" y2="215" stroke="var(--line)" stroke-width="2" marker-end="url(#arrow)"/>
             <circle cx="95" cy="300" r="34" fill="var(--surface)" stroke="var(--line)" stroke-width="2"/>
-            <text x="95" y="295" text-anchor="middle">Residential</text>
-            <text x="95" y="310" text-anchor="middle">drive</text>
+            <text x="95" y="295" text-anchor="middle" data-i18n="diagram.residential1">Residential</text>
+            <text x="95" y="310" text-anchor="middle" data-i18n="diagram.drive">drive</text>
           </g>
 
           <!-- hub -->
           <g class="fade-node" style="transition-delay:480ms">
             <rect x="335" y="130" width="200" height="100" rx="14" fill="var(--surface)" stroke="var(--accent)" stroke-width="2.5"/>
-            <text x="435" y="170" text-anchor="middle" font-family="IBM Plex Sans" font-weight="600" font-size="16" fill="var(--ink)">Processing hub</text>
-            <text x="435" y="192" text-anchor="middle" font-family="IBM Plex Mono" font-size="12" fill="var(--ink-soft)">NAT testing, component</text>
-            <text x="435" y="208" text-anchor="middle" font-family="IBM Plex Mono" font-size="12" fill="var(--ink-soft)">separation, cold chain</text>
+            <text x="435" y="170" text-anchor="middle" font-family="IBM Plex Sans" font-weight="600" font-size="16" fill="var(--ink)" data-i18n="diagram.hub1">Processing hub</text>
+            <text x="435" y="192" text-anchor="middle" font-family="IBM Plex Mono" font-size="12" fill="var(--ink-soft)" data-i18n="diagram.hub2">NAT testing, component</text>
+            <text x="435" y="208" text-anchor="middle" font-family="IBM Plex Mono" font-size="12" fill="var(--ink-soft)" data-i18n="diagram.hub3">separation, cold chain</text>
           </g>
 
           <!-- outputs -->
           <g class="fade-node" style="transition-delay:680ms">
             <line class="flow-line" data-delay="680" x1="535" y1="160" x2="700" y2="90" stroke="var(--line)" stroke-width="2" marker-end="url(#arrow)"/>
             <rect x="705" y="55" width="170" height="70" rx="12" fill="var(--surface)" stroke="var(--line)" stroke-width="2"/>
-            <text x="790" y="85" text-anchor="middle" font-family="IBM Plex Sans" font-weight="600" font-size="14" fill="var(--ink)">Hospitals</text>
-            <text x="790" y="103" text-anchor="middle" font-family="IBM Plex Mono" font-size="11.5" fill="var(--ink-soft)">red cells, capped fee</text>
+            <text x="790" y="85" text-anchor="middle" font-family="IBM Plex Sans" font-weight="600" font-size="14" fill="var(--ink)" data-i18n="diagram.hospitals1">Hospitals</text>
+            <text x="790" y="103" text-anchor="middle" font-family="IBM Plex Mono" font-size="11.5" fill="var(--ink-soft)" data-i18n="diagram.hospitals2">red cells, capped fee</text>
           </g>
           <g class="fade-node" style="transition-delay:790ms">
             <line class="flow-line" data-delay="790" x1="535" y1="200" x2="700" y2="270" stroke="var(--line)" stroke-width="2" marker-end="url(#arrow)"/>
             <rect x="705" y="238" width="170" height="70" rx="12" fill="var(--surface)" stroke="var(--accent)" stroke-width="2"/>
-            <text x="790" y="266" text-anchor="middle" font-family="IBM Plex Sans" font-weight="600" font-size="14" fill="var(--ink)">Licensed fractionator</text>
-            <text x="790" y="284" text-anchor="middle" font-family="IBM Plex Mono" font-size="11.5" fill="var(--ink-soft)">surplus plasma only</text>
+            <text x="790" y="266" text-anchor="middle" font-family="IBM Plex Sans" font-weight="600" font-size="14" fill="var(--ink)" data-i18n="diagram.fract1">Licensed fractionator</text>
+            <text x="790" y="284" text-anchor="middle" font-family="IBM Plex Mono" font-size="11.5" fill="var(--ink-soft)" data-i18n="diagram.fract2">surplus plasma only</text>
           </g>
         </svg>
         <div class="model-legend">
           <div class="item">
-            <h4>Pooled collection</h4>
-            <p>Many small, cheap mobile drives feed one hub instead of each running its own equipment. Pooled inventory across the cluster also cuts expiry losses, since combined demand varies less than any single site's.</p>
+            <h4 data-i18n="model.legend1h">Pooled collection</h4>
+            <p data-i18n="model.legend1p">Many small, cheap mobile drives feed one hub instead of each running its own equipment. Pooled inventory across the cluster also cuts expiry losses, since combined demand varies less than any single site's.</p>
           </div>
           <div class="item">
-            <h4>One licensed hub</h4>
-            <p>The NAT platform, component separator, and cold chain that a small centre cannot afford alone are shared across the whole cluster, amortized over far more donations.</p>
+            <h4 data-i18n="model.legend2h">One licensed hub</h4>
+            <p data-i18n="model.legend2p">The NAT platform, component separator, and cold chain that a small centre cannot afford alone are shared across the whole cluster, amortized over far more donations.</p>
           </div>
           <div class="item">
-            <h4>Surplus only, audited</h4>
-            <p>Plasma goes to a fractionator only once it is documented as unissued ahead of a fixed pre-expiry cutoff. Clinical demand always has first claim, and the surplus ratio is published, not discretionary.</p>
+            <h4 data-i18n="model.legend3h">Surplus only, audited</h4>
+            <p data-i18n="model.legend3p">Plasma goes to a fractionator only once it is documented as unissued ahead of a fixed pre-expiry cutoff. Clinical demand always has first claim, and the surplus ratio is published, not discretionary.</p>
           </div>
         </div>
       </div>
@@ -456,56 +632,96 @@
   <section id="economics">
     <div class="wrap">
       <div class="section-head reveal">
-        <h2>The arithmetic, per donation</h2>
-        <p class="lede">Same fully-loaded cost of Rs 1,829 in every scenario. What changes is the fee ceiling a centre operates under, and whether unissued plasma is discarded or sold under contract to a fractionator.</p>
+        <h2 data-i18n="econ.h2">The arithmetic, per donation</h2>
+        <p class="lede" data-i18n="econ.lede">Same fully-loaded cost of Rs 1,829 in every scenario. What changes is the fee ceiling a centre operates under, and whether unissued plasma is discarded or sold under contract to a fractionator.</p>
       </div>
 
       <div class="econ-grid">
         <div class="econ-cell reveal" style="transition-delay:0ms">
-          <div class="route">Today, clinical-only plasma route</div>
-          <div class="rate">Private-rate centre</div>
-          <div class="econ-line"><span>Red cells (PRBC)</span><span>Rs 1,550</span></div>
-          <div class="econ-line"><span>Plasma (clinical issue)</span><span>Rs 300</span></div>
-          <div class="econ-line total"><span>Revenue vs. cost</span><span>Rs 1,850 &minus; Rs 1,829</span></div>
-          <span class="margin-pill good">+Rs 21 per unit</span>
+          <div class="route" data-i18n="econ.routeClinical">Today, clinical-only plasma route</div>
+          <div class="rate" data-i18n="econ.ratePrivate">Private-rate centre</div>
+          <div class="econ-line"><span data-i18n="econ.lineRedCells">Red cells (PRBC)</span><span>Rs 1,550</span></div>
+          <div class="econ-line"><span data-i18n="econ.linePlasmaClinical">Plasma (clinical issue)</span><span>Rs 300</span></div>
+          <div class="econ-line total"><span data-i18n="econ.lineRevCost">Revenue vs. cost</span><span>Rs 1,850 &minus; Rs 1,829</span></div>
+          <span class="margin-pill good" data-i18n="econ.pill1">+Rs 21 per unit</span>
         </div>
         <div class="econ-cell reveal" style="transition-delay:90ms">
-          <div class="route">RaktaSetu, fractionator plasma route</div>
-          <div class="rate">Private-rate centre</div>
-          <div class="econ-line"><span>Red cells (PRBC)</span><span>Rs 1,550</span></div>
-          <div class="econ-line"><span>Surplus plasma to fractionator</span><span>Rs 320</span></div>
-          <div class="econ-line total"><span>Revenue vs. cost</span><span>Rs 1,870 &minus; Rs 1,829</span></div>
-          <span class="margin-pill good">+Rs 41 per unit</span>
+          <div class="route" data-i18n="econ.routeFract">RaktaSetu, fractionator plasma route</div>
+          <div class="rate" data-i18n="econ.ratePrivate">Private-rate centre</div>
+          <div class="econ-line"><span data-i18n="econ.lineRedCells">Red cells (PRBC)</span><span>Rs 1,550</span></div>
+          <div class="econ-line"><span data-i18n="econ.linePlasmaFract">Surplus plasma to fractionator</span><span>Rs 320</span></div>
+          <div class="econ-line total"><span data-i18n="econ.lineRevCost">Revenue vs. cost</span><span>Rs 1,870 &minus; Rs 1,829</span></div>
+          <span class="margin-pill good" data-i18n="econ.pill2">+Rs 41 per unit</span>
         </div>
         <div class="econ-cell reveal" style="transition-delay:180ms">
-          <div class="route">Today, clinical-only plasma route</div>
-          <div class="rate">Government-rate centre</div>
-          <div class="econ-line"><span>Red cells (PRBC)</span><span>Rs 1,100</span></div>
-          <div class="econ-line"><span>Plasma (clinical issue)</span><span>Rs 300</span></div>
-          <div class="econ-line total"><span>Revenue vs. cost</span><span>Rs 1,400 &minus; Rs 1,829</span></div>
-          <span class="margin-pill bad">&minus;Rs 429 per unit</span>
+          <div class="route" data-i18n="econ.routeClinical">Today, clinical-only plasma route</div>
+          <div class="rate" data-i18n="econ.rateGovt">Government-rate centre</div>
+          <div class="econ-line"><span data-i18n="econ.lineRedCells">Red cells (PRBC)</span><span>Rs 1,100</span></div>
+          <div class="econ-line"><span data-i18n="econ.linePlasmaClinical">Plasma (clinical issue)</span><span>Rs 300</span></div>
+          <div class="econ-line total"><span data-i18n="econ.lineRevCost">Revenue vs. cost</span><span>Rs 1,400 &minus; Rs 1,829</span></div>
+          <span class="margin-pill bad" data-i18n="econ.pill3">&minus;Rs 429 per unit</span>
         </div>
         <div class="econ-cell reveal" style="transition-delay:270ms">
-          <div class="route">RaktaSetu, fractionator plasma route</div>
-          <div class="rate">Government-rate centre</div>
-          <div class="econ-line"><span>Red cells (PRBC)</span><span>Rs 1,100</span></div>
-          <div class="econ-line"><span>Surplus plasma to fractionator</span><span>Rs 320</span></div>
-          <div class="econ-line total"><span>Revenue vs. cost</span><span>Rs 1,420 &minus; Rs 1,829</span></div>
-          <span class="margin-pill bad">&minus;Rs 409 per unit</span>
+          <div class="route" data-i18n="econ.routeFract">RaktaSetu, fractionator plasma route</div>
+          <div class="rate" data-i18n="econ.rateGovt">Government-rate centre</div>
+          <div class="econ-line"><span data-i18n="econ.lineRedCells">Red cells (PRBC)</span><span>Rs 1,100</span></div>
+          <div class="econ-line"><span data-i18n="econ.linePlasmaFract">Surplus plasma to fractionator</span><span>Rs 320</span></div>
+          <div class="econ-line total"><span data-i18n="econ.lineRevCost">Revenue vs. cost</span><span>Rs 1,420 &minus; Rs 1,829</span></div>
+          <span class="margin-pill bad" data-i18n="econ.pill4">&minus;Rs 409 per unit</span>
         </div>
       </div>
 
       <div class="sensitivity reveal">
-        <h4>Plasma revenue is not the whole fix, and we are not pretending it is.</h4>
-        <p>At the government fee ceiling, routing surplus plasma to a fractionator narrows the loss from Rs 429 to Rs 409 per unit. It does not close it. The Rs 1,829 base cost has to fall too, and that only happens through volume: NAT and component-separation equipment are largely fixed cost, so a hub serving many spokes spreads that cost over far more donations than any single small centre does today.</p>
-        <p>We have not found a sourced, published figure for exactly how much a consolidated hub cuts per-unit cost, so we model it as a labelled sensitivity, not a claim. Assuming plasma is routed to the fractionator throughout: a <strong>15 percent</strong> reduction in base cost (to about Rs 1,555) narrows the government-rate loss to roughly Rs 135 per unit. A <strong>25 percent</strong> reduction (to about Rs 1,372) turns it into a profit of roughly Rs 48 per unit. Getting there is a volume and operations problem, not a pricing problem, which is exactly why the model is a hub, not a bigger version of the same small centre.</p>
-        <p class="flag">Plasma yield assumed at 0.2 litres per 450ml donation, a standard clinical approximation, at the Rs 1,600 per litre fractionator price actually paid for surplus plasma in India (see sources).</p>
+        <h4 data-i18n="econ.sens1h">Plasma revenue is not the whole fix, and we are not pretending it is.</h4>
+        <p data-i18n="econ.sens1p1">At the government fee ceiling, routing surplus plasma to a fractionator narrows the loss from Rs 429 to Rs 409 per unit. It does not close it. The Rs 1,829 base cost has to fall too, and that only happens through volume: NAT and component-separation equipment are largely fixed cost, so a hub serving many spokes spreads that cost over far more donations than any single small centre does today.</p>
+        <p data-i18n-html="econ.sens1p2">We have not found a sourced, published figure for exactly how much a consolidated hub cuts per-unit cost, so we model it as a labelled sensitivity, not a claim. Assuming plasma is routed to the fractionator throughout: a <strong>15 percent</strong> reduction in base cost (to about Rs 1,555) narrows the government-rate loss to roughly Rs 135 per unit. A <strong>25 percent</strong> reduction (to about Rs 1,372) turns it into a profit of roughly Rs 48 per unit. Getting there is a volume and operations problem, not a pricing problem, which is exactly why the model is a hub, not a bigger version of the same small centre.</p>
+        <p class="flag" data-i18n="econ.sens1flag">Plasma yield assumed at 0.2 litres per 450ml donation, a standard clinical approximation, at the Rs 1,600 per litre fractionator price actually paid for surplus plasma in India (see sources).</p>
       </div>
 
       <div class="sensitivity reveal" style="margin-top:20px;">
-        <h4>Capital cost is real, and it does not pretend to be self-funding on day one.</h4>
-        <p>An advanced hub, NAT platform, component separation, apheresis, cold chain, costs an estimated Rs 1.5 to 4 crore to set up. At a Rs 41 margin per unit, one hub would need roughly <strong>88,000 donations in a single year</strong> just to amortise a mid-range Rs 2.5 crore build over seven years, before covering any of its own operating margin twice over. That is too high a bar to clear from a standing start.</p>
-        <p>So the model is explicit about sequencing: capital cost is funded once, by CSR or grant capital, the way public health infrastructure normally is. What has to be self-sustaining, and what PS 8 actually asks for, is the day-to-day operating economics after that: processing fees plus fractionator plasma revenue covering the ongoing cost of running the hub, without donor payment and without raising the price a patient pays.</p>
+        <h4 data-i18n="econ.sens2h">Capital cost is real, and it does not pretend to be self-funding on day one.</h4>
+        <p data-i18n-html="econ.sens2p1">An advanced hub, NAT platform, component separation, apheresis, cold chain, costs an estimated Rs 1.5 to 4 crore to set up. At a Rs 41 margin per unit, one hub would need roughly <strong>88,000 donations in a single year</strong> just to amortise a mid-range Rs 2.5 crore build over seven years, before covering any of its own operating margin twice over. That is too high a bar to clear from a standing start.</p>
+        <p data-i18n="econ.sens2p2">So the model is explicit about sequencing: capital cost is funded once, by CSR or grant capital, the way public health infrastructure normally is. What has to be self-sustaining, and what PS 8 actually asks for, is the day-to-day operating economics after that: processing fees plus fractionator plasma revenue covering the ongoing cost of running the hub, without donor payment and without raising the price a patient pays.</p>
+      </div>
+
+      <div class="calc reveal">
+        <h4 data-i18n="calc.h4">Try your own assumptions</h4>
+        <p class="calc-intro" data-i18n="calc.intro">This runs the same arithmetic as the grid above for the fractionator route. The clinical-only baseline isn't reproduced here since it works on a flat Rs 300 per-unit fee, not a per-litre market price, so the two aren't the same kind of number.</p>
+        <div class="calc-presets" role="group" aria-label="Load a preset scenario">
+          <button type="button" class="chip is-active" data-preset="private" data-i18n="econ.ratePrivate">Private-rate centre</button>
+          <button type="button" class="chip" data-preset="govt" data-i18n="econ.rateGovt">Government-rate centre</button>
+        </div>
+        <div class="calc-grid">
+          <div class="calc-controls">
+            <label class="calc-field">
+              <span class="calc-label"><span data-i18n="calc.lPRBC">Red cell processing fee</span> <output for="inPRBC" id="outPRBC">Rs 1,550</output></span>
+              <input type="range" id="inPRBC" min="900" max="1700" step="10" value="1550">
+            </label>
+            <label class="calc-field">
+              <span class="calc-label"><span data-i18n="calc.lPlasmaPrice">Plasma price to fractionator, per litre</span> <output for="inPlasmaPrice" id="outPlasmaPrice">Rs 1,600</output></span>
+              <input type="range" id="inPlasmaPrice" min="0" max="2500" step="50" value="1600">
+            </label>
+            <label class="calc-field">
+              <span class="calc-label"><span data-i18n="calc.lYield">Plasma sold per donation</span> <output for="inYield" id="outYield">0.20 L</output></span>
+              <input type="range" id="inYield" min="0" max="0.30" step="0.01" value="0.20">
+            </label>
+            <label class="calc-field">
+              <span class="calc-label"><span data-i18n="calc.lCost">Base processing cost per donation</span> <output for="inCost" id="outCost">Rs 1,829</output></span>
+              <input type="range" id="inCost" min="1200" max="2200" step="1" value="1829">
+            </label>
+            <label class="calc-field">
+              <span class="calc-label"><span data-i18n="calc.lVolCut">Cost cut from hub-scale volume</span> <output for="inVolCut" id="outVolCut">0%</output></span>
+              <input type="range" id="inVolCut" min="0" max="30" step="1" value="0">
+            </label>
+          </div>
+          <div class="calc-result" aria-live="polite">
+            <div class="econ-line"><span data-i18n="calc.rRedCells">Red cells</span><span id="resPRBC" class="mono">Rs 1,550</span></div>
+            <div class="econ-line"><span data-i18n="calc.rPlasmaRev">Plasma revenue</span><span id="resPlasma" class="mono">Rs 320</span></div>
+            <div class="econ-line"><span data-i18n="calc.rEffCost">Effective cost</span><span id="resCost" class="mono">Rs 1,829</span></div>
+            <div class="econ-line total"><span data-i18n="calc.rMargin">Margin per unit</span><span id="resMargin" class="mono">+Rs 41</span></div>
+            <span id="calcPill" class="margin-pill good">+Rs 41 per unit</span>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -514,38 +730,82 @@
   <section id="compliance" style="background:var(--surface-2); border-top:1px solid var(--line); border-bottom:1px solid var(--line);">
     <div class="wrap">
       <div class="section-head reveal">
-        <h2>Why this does not commercialize blood</h2>
-        <p class="lede">Paying for blood is illegal in India for good reason, and the incentive risk in any plasma-revenue model is real: an operator paid for volume has a reason to over-collect. RaktaSetu is built to remove that incentive structurally, not promise to resist it.</p>
+        <h2 data-i18n="compliance.h2">Why this does not commercialize blood</h2>
+        <p class="lede" data-i18n="compliance.lede">Paying for blood is illegal in India for good reason, and the incentive risk in any plasma-revenue model is real: an operator paid for volume has a reason to over-collect. RaktaSetu is built to remove that incentive structurally, not promise to resist it.</p>
       </div>
       <div class="rulelist">
         <div class="rule-row reveal" style="transition-delay:0ms">
           <div class="rn mono">01</div>
           <div>
-            <h3>The donor is never paid</h3>
-            <p>Every unit is collected through voluntary, unpaid donation drives. No fee, discount, or incentive is tied to donating, which keeps the model on the correct side of the Supreme Court's direction to phase out professional donation entirely.</p>
+            <h3 data-i18n="compliance.r1h">The donor is never paid</h3>
+            <p data-i18n="compliance.r1p">Every unit is collected through voluntary, unpaid donation drives. No fee, discount, or incentive is tied to donating, which keeps the model on the correct side of the Supreme Court's direction to phase out professional donation entirely.</p>
           </div>
         </div>
         <div class="rule-row reveal" style="transition-delay:70ms">
           <div class="rn mono">02</div>
           <div>
-            <h3>The patient pays the same capped fee</h3>
-            <p>Hospitals are charged the same NBTC-ceiling processing fee they would pay any blood centre. Plasma revenue does not raise the clinical price, and it does not buy any hospital preferential access to red cells.</p>
+            <h3 data-i18n="compliance.r2h">The patient pays the same capped fee</h3>
+            <p data-i18n="compliance.r2p">Hospitals are charged the same NBTC-ceiling processing fee they would pay any blood centre. Plasma revenue does not raise the clinical price, and it does not buy any hospital preferential access to red cells.</p>
           </div>
         </div>
         <div class="rule-row reveal" style="transition-delay:140ms">
           <div class="rn mono">03</div>
           <div>
-            <h3>Blood itself is never sold</h3>
-            <p>The only product transferred for revenue is plasma that has already been documented as surplus to clinical need, ahead of a fixed pre-expiry cutoff, into the fractionation channel NBTC guidelines already permit blood centres to use.</p>
+            <h3 data-i18n="compliance.r3h">Blood itself is never sold</h3>
+            <p data-i18n="compliance.r3p">The only product transferred for revenue is plasma that has already been documented as surplus to clinical need, ahead of a fixed pre-expiry cutoff, into the fractionation channel NBTC guidelines already permit blood centres to use.</p>
           </div>
         </div>
         <div class="rule-row reveal" style="transition-delay:210ms">
           <div class="rn mono">04</div>
           <div>
-            <h3>Clinical demand has first claim, always</h3>
-            <p>The surplus ratio, the share of collected plasma that is ever routed to a fractionator, is capped, audited, and published. No plasma is withheld from a hospital that needs it in order to sell it elsewhere.</p>
+            <h3 data-i18n="compliance.r4h">Clinical demand has first claim, always</h3>
+            <p data-i18n="compliance.r4p">The surplus ratio, the share of collected plasma that is ever routed to a fractionator, is capped, audited, and published. No plasma is withheld from a hospital that needs it in order to sell it elsewhere.</p>
           </div>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CITY -->
+  <section id="city" style="background:var(--surface-2); border-top:1px solid var(--line); border-bottom:1px solid var(--line);">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <h2 data-i18n="city.h2">Where the pilot goes</h2>
+        <p class="lede" data-i18n="city.lede">Three candidates, compared on the state's existing blood-bank density, metro population, and whether this exact transaction has already happened there.</p>
+      </div>
+      <div class="city-table-wrap reveal">
+        <table class="city-table">
+          <thead>
+            <tr><th scope="col" data-i18n="city.thCity">City</th><th scope="col" data-i18n="city.thState">State</th><th scope="col" data-i18n="city.thPop">Metro population</th><th scope="col" data-i18n="city.thBanks">Licensed blood banks in state</th><th scope="col" data-i18n="city.thPrecedent">Precedent</th></tr>
+          </thead>
+          <tbody>
+            <tr class="is-pick">
+              <th scope="row" data-i18n="city.nagpur">Nagpur</th>
+              <td data-i18n="city.maharashtra">Maharashtra</td>
+              <td class="mono">3.17M</td>
+              <td class="mono" data-i18n="city.banksNagpur">370, highest of any state</td>
+              <td data-i18n="city.precNagpur">AIIMS Nagpur has already sold over 1,000 litres of surplus plasma to a fractionator, RTI-disclosed</td>
+            </tr>
+            <tr>
+              <th scope="row" data-i18n="city.indore">Indore</th>
+              <td data-i18n="city.mp">Madhya Pradesh</td>
+              <td class="mono">3.48M</td>
+              <td class="mono" data-i18n="city.assessNote">133 as of the last national assessment</td>
+              <td data-i18n="city.none">None found</td>
+            </tr>
+            <tr>
+              <th scope="row" data-i18n="city.coimbatore">Coimbatore</th>
+              <td data-i18n="city.tn">Tamil Nadu</td>
+              <td class="mono">3.22M</td>
+              <td class="mono" data-i18n="city.assessNote2">265 as of the last national assessment</td>
+              <td data-i18n="city.none">None found</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="sensitivity reveal" style="margin-top:24px;">
+        <h4 data-i18n="city.pickH">The pilot goes to Nagpur, and precedent is the reason, not population.</h4>
+        <p data-i18n="city.pickP">Indore's metro area is larger, and Tamil Nadu has more licensed blood banks than Madhya Pradesh, but neither has a documented instance of a public institution actually selling surplus plasma to a fractionator. Nagpur does. That means the legal, logistical, and institutional channel this whole model depends on has already been used once in this exact city, by a public hospital, with the transaction disclosed under RTI. A first pilot should spend its risk budget on proving the hub-and-spoke economics, not on being the first to test whether the fractionator channel works at all.</p>
       </div>
     </div>
   </section>
@@ -554,21 +814,44 @@
   <section id="roadmap">
     <div class="wrap">
       <div class="section-head reveal">
-        <h2>Path to viability</h2>
-        <p class="lede">Capital first, then operations, then replication. Each stage has a single, checkable exit condition before moving to the next.</p>
+        <h2 data-i18n="road.h2">Path to viability</h2>
+        <p class="lede" data-i18n="road.lede">Capital first, then operations, then replication, laid out month by month so there is a checkable exit condition at every stage, not just at the end of the year.</p>
       </div>
       <div class="roadmap reveal">
         <div class="rstep" style="--i:0">
-          <h3>Fund and license the first hub</h3>
-          <p>Raise Rs 1.5 to 4 crore in CSR or grant capital for one advanced processing hub, and sign a standing offtake agreement with a licensed Indian fractionator before construction, not after, so the plasma revenue line is contracted, not assumed.</p>
+          <div class="rmonth mono" data-i18n="road.m1">Month 1</div>
+          <h3 data-i18n="road.h1">Close capital and lock the offtake agreement</h3>
+          <p data-i18n="road.p1">Raise Rs 1.5 to 4 crore in CSR or grant capital, select the pilot city, and sign a standing offtake agreement with a licensed Indian fractionator before construction starts, not after, so the plasma revenue line is contracted, not assumed.</p>
         </div>
         <div class="rstep" style="--i:1">
-          <h3>Prove operating breakeven</h3>
-          <p>Run the hub against three to five spokes for twelve months, publish the surplus-plasma ratio and per-unit margin quarterly, and confirm operations clear breakeven on processing fees and plasma revenue alone, independent of the capital already spent.</p>
+          <div class="rmonth mono" data-i18n="road.m2">Months 2 to 3</div>
+          <h3 data-i18n="road.h2b">Build the hub</h3>
+          <p data-i18n="road.p2">Install the NAT platform, component-separation equipment, and cold chain; hire and train staff; begin the NABL accreditation process in parallel rather than after opening.</p>
         </div>
         <div class="rstep" style="--i:2">
-          <h3>Replicate to a second city</h3>
-          <p>Only after the first hub's operating numbers are public and independently verifiable, license the same hub design, offtake structure, and audit process to a second city, funded this time in part by the first hub's own operating surplus.</p>
+          <div class="rmonth mono" data-i18n="road.m3">Months 4 to 5</div>
+          <h3 data-i18n="road.h3">Onboard the first spokes</h3>
+          <p data-i18n="road.p3">Bring three to five mobile collection drives, college, corporate, and residential, online against the hub, and start pooled component separation with the surplus-tracking log running from day one.</p>
+        </div>
+        <div class="rstep" style="--i:3">
+          <div class="rmonth mono" data-i18n="road.m4">Month 6</div>
+          <h3 data-i18n="road.h4">First plasma shipment and first public report</h3>
+          <p data-i18n="road.p4">Ship the first batch of documented-surplus plasma to the fractionator, and publish the first quarterly report on the surplus ratio and per-unit margin, the same reporting format for the whole pilot.</p>
+        </div>
+        <div class="rstep" style="--i:4">
+          <div class="rmonth mono" data-i18n="road.m5">Months 7 to 9</div>
+          <h3 data-i18n="road.h5">Scale spokes, stress-test the audit</h3>
+          <p data-i18n="road.p5">Add spokes as capacity allows, publish the second quarterly report, and treat any gap between the modeled and measured surplus ratio as a finding to correct, not a number to smooth over.</p>
+        </div>
+        <div class="rstep" style="--i:5">
+          <div class="rmonth mono" data-i18n="road.m6">Months 10 to 12</div>
+          <h3 data-i18n="road.h6">Confirm operating breakeven</h3>
+          <p data-i18n="road.p6">Compile a full year of operating data and confirm the hub clears breakeven on processing fees and plasma revenue alone, independent of the capital already spent, exactly what PS 8 asks for.</p>
+        </div>
+        <div class="rstep" style="--i:6">
+          <div class="rmonth mono" data-i18n="road.m7">Month 13 onward</div>
+          <h3 data-i18n="road.h7">Replicate to a second city</h3>
+          <p data-i18n="road.p7">Only once the first hub's numbers are public and independently verifiable, license the same hub design, offtake structure, and audit process to a second city, funded this time in part by the first hub's own operating surplus.</p>
         </div>
       </div>
     </div>
@@ -578,20 +861,56 @@
   <section style="background:var(--surface-2); border-top:1px solid var(--line); border-bottom:1px solid var(--line);">
     <div class="wrap">
       <div class="section-head reveal">
-        <h2>What could break this</h2>
-        <p class="lede">Stated plainly, because a judge will ask anyway.</p>
+        <h2 data-i18n="risk.h2">What could break this</h2>
+        <p class="lede" data-i18n="risk.lede">Stated plainly, because a judge will ask anyway.</p>
       </div>
       <div class="risk-row reveal" style="transition-delay:0ms">
-        <div class="risk"><span class="tag">Risk</span>A single fractionator relationship gives the buyer pricing power over the hub's margin line.</div>
-        <div class="mit"><span class="tag">Mitigation</span>Contract with more than one fractionator where possible, and treat the Rs 320 plasma line as upside on top of a model that must clear breakeven on the capped processing fee and volume alone.</div>
+        <div class="risk"><span class="tag" data-i18n="risk.tagRisk">Risk</span><span data-i18n="risk.r1">A single fractionator relationship gives the buyer pricing power over the hub's margin line.</span></div>
+        <div class="mit"><span class="tag" data-i18n="risk.tagMit">Mitigation</span><span data-i18n="risk.m1">Contract with more than one fractionator where possible, and treat the Rs 320 plasma line as upside on top of a model that must clear breakeven on the capped processing fee and volume alone.</span></div>
       </div>
       <div class="risk-row reveal" style="transition-delay:80ms">
-        <div class="risk"><span class="tag">Risk</span>Plasma revenue creates an incentive to collect more than clinically needed.</div>
-        <div class="mit"><span class="tag">Mitigation</span>Cap and publish the surplus ratio quarterly; route to the fractionator only after a fixed pre-expiry cutoff with unissued status logged, not at collection.</div>
+        <div class="risk"><span class="tag" data-i18n="risk.tagRisk">Risk</span><span data-i18n="risk.r2">Plasma revenue creates an incentive to collect more than clinically needed.</span></div>
+        <div class="mit"><span class="tag" data-i18n="risk.tagMit">Mitigation</span><span data-i18n="risk.m2">Cap and publish the surplus ratio quarterly; route to the fractionator only after a fixed pre-expiry cutoff with unissued status logged, not at collection.</span></div>
       </div>
       <div class="risk-row reveal" style="transition-delay:160ms">
-        <div class="risk"><span class="tag">Risk</span>The volume-driven cost reduction the government-rate scenario needs is a modeled assumption, not yet a measured one.</div>
-        <div class="mit"><span class="tag">Mitigation</span>Treat this as the first thing the pilot hub measures. If the reduction does not materialise, the government-rate segment is deprioritised in favour of private-rate centres, where the model already clears breakeven without it.</div>
+        <div class="risk"><span class="tag" data-i18n="risk.tagRisk">Risk</span><span data-i18n="risk.r3">The volume-driven cost reduction the government-rate scenario needs is a modeled assumption, not yet a measured one.</span></div>
+        <div class="mit"><span class="tag" data-i18n="risk.tagMit">Mitigation</span><span data-i18n="risk.m3">Treat this as the first thing the pilot hub measures. If the reduction does not materialise, the government-rate segment is deprioritised in favour of private-rate centres, where the model already clears breakeven without it.</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <h2 data-i18n="faq.h2">Questions judges tend to ask</h2>
+        <p class="lede" data-i18n="faq.lede">Expand any of these. If the answer you're looking for isn't here, it's probably in the risks or compliance sections above.</p>
+      </div>
+      <div class="faq-list reveal">
+        <details class="faq-item">
+          <summary><span data-i18n="faq.q1">Isn't routing plasma to a fractionator just commercialising blood by another name?</span><span class="chev" aria-hidden="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 7.5l5 5 5-5"/></svg></span></summary>
+          <p data-i18n="faq.a1">No. The donor is unpaid, the patient's fee does not change, and blood itself is never transferred for money. What is sold is plasma that has already been logged as unissued ahead of a fixed pre-expiry cutoff, into a fractionation channel NBTC guidelines already permit. The distinction is not semantic: it is what makes the model legal.</p>
+        </details>
+        <details class="faq-item">
+          <summary><span data-i18n="faq.q2">Why not just ask NBTC to raise the processing-fee ceiling instead?</span><span class="chev" aria-hidden="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 7.5l5 5 5-5"/></svg></span></summary>
+          <p data-i18n="faq.a2">That ceiling exists so a patient's access to blood never depends on ability to pay. Raising it would fix the funding gap by making transfusion more expensive for patients, which is the outcome the model is explicitly designed to avoid. Working within the existing cap, and funding the gap from a different source, is the harder but correct constraint to accept.</p>
+        </details>
+        <details class="faq-item">
+          <summary><span data-i18n="faq.q3">What if the fractionator simply refuses to renew the offtake contract?</span><span class="chev" aria-hidden="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 7.5l5 5 5-5"/></svg></span></summary>
+          <p data-i18n="faq.a3">The hub still has to clear breakeven on the capped processing fee and collection volume alone, without counting on plasma revenue. Plasma is modeled as the margin on top of that floor, not the floor itself. Contracting with more than one fractionator where the local market allows it reduces this risk further.</p>
+        </details>
+        <details class="faq-item">
+          <summary><span data-i18n="faq.q4">Who checks that the published surplus ratio is accurate?</span><span class="chev" aria-hidden="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 7.5l5 5 5-5"/></svg></span></summary>
+          <p data-i18n="faq.a4">The pilot proposes quarterly reporting to the relevant state blood transfusion council, with the same unissued-status and pre-expiry-cutoff logs available to an independent auditor on request. This is a governance detail to formalise during the pilot, not an afterthought bolted on once the model is running.</p>
+        </details>
+        <details class="faq-item">
+          <summary><span data-i18n="faq.q5">Why would an existing blood bank hand its volume to a new hub?</span><span class="chev" aria-hidden="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 7.5l5 5 5-5"/></svg></span></summary>
+          <p data-i18n="faq.a5">It does not have to give up its donor relationships or identity. The hub is a shared processing utility: NAT testing, component separation, cold chain, and the fractionator relationship, that a small centre cannot afford to build alone. A centre plugs its collection drives into the hub and keeps everything else it already does.</p>
+        </details>
+        <details class="faq-item">
+          <summary><span data-i18n="faq.q6">What exactly are you asking for right now?</span><span class="chev" aria-hidden="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 7.5l5 5 5-5"/></svg></span></summary>
+          <p data-i18n="faq.a6">Rs 1.5 to 4 crore in CSR or grant capital for one pilot hub, a signed offtake agreement with a licensed fractionator, and twelve months to publish quarterly operating numbers in public. Nothing beyond that pilot is being asked for yet.</p>
+        </details>
       </div>
     </div>
   </section>
@@ -600,13 +919,13 @@
   <section id="ask" class="ask">
     <div class="wrap ask-grid">
       <div class="reveal">
-        <h2>What we are asking for</h2>
-        <p class="lede">A pilot: one hub, three to five spokes, one fractionator offtake agreement, one hospital network, twelve months, with quarterly public reporting on the surplus ratio and the per-unit margin.</p>
+        <h2 data-i18n="ask.h2">What we are asking for</h2>
+        <p class="lede" data-i18n="ask.lede">A pilot: one hub, three to five spokes, one fractionator offtake agreement, one hospital network, twelve months, with quarterly public reporting on the surplus ratio and the per-unit margin.</p>
       </div>
       <div class="reveal">
         <div class="callout">
           <div class="k mono">Team RaktaSetu</div>
-          <div class="d">VentureX 2026, Problem Statement 8: Blood and Plasma Supply Chain<br>Entrepreneurship Cell, IIT (ISM) Dhanbad</div>
+          <div class="d" data-i18n-html="ask.calloutD">VentureX 2026, Problem Statement 8: Blood and Plasma Supply Chain<br>Entrepreneurship Cell, IIT (ISM) Dhanbad</div>
         </div>
       </div>
     </div>
@@ -615,7 +934,7 @@
   <!-- SOURCES -->
   <section class="sources">
     <div class="wrap">
-      <h2 style="font-size:20px; margin-bottom:20px;">Sources and methodology</h2>
+      <h2 style="font-size:20px; margin-bottom:20px;" data-i18n="sources.h2">Sources and methodology</h2>
       <ol>
         <li>NBTC processing-fee ceilings for whole blood and red cells: <a href="https://thehealthmaster.com/2022/06/08/rs-1050-per-unit-for-whole-blood/" target="_blank" rel="noopener">thehealthmaster.com reporting on state blood transfusion council rates</a> and the <a href="https://www.naco.gov.in/sites/default/files/Guidelines%20on%20recovery%20of%20Processing%20Charges%20for%20Blood%20&%20Blood%20Components.pdf" target="_blank" rel="noopener">NACO guidelines on recovery of processing charges</a>.</li>
         <li>Fresh frozen plasma wastage, over 3 lakh units in a reported year, more than half of national blood-component discards: <a href="https://english.newsnationtv.com/lifestyle/health-and-fitness/6-lakh-litres-of-blood-wasted-in-five-years-in-india-serious-loopholes-in-blood-banking-system-exposed-169373.html" target="_blank" rel="noopener">News Nation reporting on national blood-bank discard data</a>.</li>
@@ -624,8 +943,10 @@
         <li>Blood centre setup costs by tier: <a href="https://www.adrine.in/blog/how-to-start-blood-bank-india" target="_blank" rel="noopener">Adrine, how to start a blood bank in India</a>.</li>
         <li>National plasma supply and fractionation capacity: <a href="https://www.investindia.gov.in/team-india-blogs/overview-blood-plasma-fractionation-india" target="_blank" rel="noopener">Invest India, overview of blood plasma fractionation in India</a>.</li>
         <li>India plasma fractionation market size and growth: <a href="https://www.mordorintelligence.com/industry-reports/india-plasma-fractionation-market" target="_blank" rel="noopener">Mordor Intelligence, India plasma fractionation market report</a>.</li>
+        <li>Licensed blood banks by state (Maharashtra, Madhya Pradesh, Tamil Nadu): <a href="https://www.statista.com/statistics/1405855/india-licensed-blood-banks-by-state/" target="_blank" rel="noopener">Statista, India licensed blood banks by state, 2022</a> and the <a href="https://naco.gov.in/sites/default/files/Assessment%20of%20Blood%20Banks%20in%20India%20-%202016.pdf" target="_blank" rel="noopener">NACO Assessment of Blood Banks in India, 2016</a>.</li>
+        <li>Metro population figures for Nagpur, Indore, and Coimbatore: <a href="https://www.macrotrends.net/global-metrics/cities/21347/nagpur/population" target="_blank" rel="noopener">Macrotrends, Nagpur metro population</a>, <a href="https://www.macrotrends.net/global-metrics/cities/21278/indore/population" target="_blank" rel="noopener">Macrotrends, Indore metro population</a>, and <a href="https://en.wikipedia.org/wiki/Coimbatore_metropolitan_area" target="_blank" rel="noopener">Coimbatore metropolitan area, Wikipedia, citing 2025 to 2026 growth-rate estimates</a>.</li>
       </ol>
-      <p style="font-size:13px; color:var(--ink-faint); margin-top:20px; max-width:70ch;">
+      <p style="font-size:13px; color:var(--ink-faint); margin-top:20px; max-width:70ch;" data-i18n="sources.note">
         Figures above are sourced as cited. Two figures on this page are explicitly modeled, not sourced, and are labelled inline where they appear: the per-unit cost reduction from hub-scale consolidation, and the seven-year straight-line capex amortisation used to estimate breakeven volume. Both are stated as assumptions for a pilot to test, not as claims.
       </p>
     </div>
@@ -635,13 +956,255 @@
 
 <footer>
   <div class="wrap foot-row">
-    <span>RaktaSetu, a VentureX 2026 submission</span>
-    <span>Blood is never sold. Only surplus plasma, under an NBTC-sanctioned channel.</span>
+    <span data-i18n="footer.left">RaktaSetu, a VentureX 2026 submission</span>
+    <span data-i18n="footer.right">Blood is never sold. Only surplus plasma, under an NBTC-sanctioned channel.</span>
   </div>
 </footer>
 
 <script>
   const REDUCE = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  const HI = {
+    'nav.skip': 'मुख्य सामग्री पर जाएँ',
+    'nav.problem': 'समस्या',
+    'nav.model': 'मॉडल',
+    'nav.economics': 'अर्थशास्त्र',
+    'nav.compliance': 'अनुपालन',
+    'nav.city': 'पायलट शहर',
+    'nav.roadmap': 'रोडमैप',
+    'nav.faq': 'सामान्य प्रश्न',
+    'nav.ask': 'हमारी माँग',
+    'hero.kicker': 'वेंचरX 2026, समस्या वक्तव्य 8',
+    'hero.h1': 'हम रक्त नहीं बेचते। हम इसके प्लाज्मा को बर्बाद होने से रोकते हैं।',
+    'hero.sub': 'एक हब-एंड-स्पोक मॉडल जो भारत की रक्त आपूर्ति को वित्तपोषित रखता है, केवल उस प्लाज्मा को बेचकर जो अन्यथा बिना उपयोग के समाप्त हो जाता।',
+    'hero.ctaPrimary': 'यूनिट अर्थशास्त्र देखें',
+    'hero.ctaGhost': 'अनुपालन का मामला पढ़ें',
+    'hero.imgAlt': 'कोल्ड चेन भंडारण, प्रतिनिधि छवि',
+    'hero.cap': 'जमा हुआ प्लाज्मा एक वर्ष तक अपना मूल्य बनाए रखता है। इसका अधिकांश हिस्सा कभी यह मौका ही नहीं पाता।',
+    'tldr.1': 'दानकर्ता बिना भुगतान के स्वयंसेवक होते हैं। मरीज़ वही सरकार-सीमित शुल्क चुकाते हैं। रक्त कभी नहीं बेचा जाता।',
+    'tldr.2': 'केवल वह प्लाज्मा बेचा जाता है जो पहले से अप्रयुक्त है और अपनी समाप्ति तिथि के करीब है, और वह भी एक लाइसेंस प्राप्त भारतीय फ्रैक्शनेटर को।',
+    'tldr.3': 'अकेले इतना ही निजी-दर केंद्रों में प्रति यूनिट 21 रुपये के मार्जिन को 41 रुपये में बदल देता है। सरकारी-दर केंद्रों को अभी भी हब-स्तरीय मात्रा की आवश्यकता है।',
+    'tldr.4': 'माँग: एक पायलट हब को वित्तपोषित करें, बारह महीनों में परिचालन ब्रेकईवन साबित करें, फिर दोहराएँ।',
+    'stat.1': 'ताज़ा जमे हुए प्लाज्मा की इकाइयाँ जो एक रिपोर्ट किए गए वर्ष में राष्ट्रीय स्तर पर नष्ट कर दी गईं, उस वर्ष के सभी रक्त-घटक अपव्यय का आधे से अधिक',
+    'stat.2': 'प्रति लीटर जो एक लाइसेंस प्राप्त भारतीय फ्रैक्शनेटर ने वास्तव में एक अस्पताल को अतिरिक्त प्लाज्मा के लिए भुगतान किया (एम्स नागपुर, आरटीआई से उजागर)',
+    'stat.3': 'हर साल फ्रैक्शनेशन के लिए राष्ट्रीय स्तर पर उपलब्ध प्लाज्मा, लगभग एक भारतीय संयंत्र की रेटेड क्षमता के बराबर',
+    'copy.hint': 'स्रोत सहित कॉपी करने के लिए क्लिक करें',
+    'problem.h2': 'ब्लड बैंक खराब तरीके से नहीं चलाए जा रहे। वे जानबूझकर कम वित्तपोषित हैं।',
+    'problem.lede': 'एक ब्लड सेंटर जो प्रोसेसिंग शुल्क ले सकता है, वह राष्ट्रीय रक्त आधान परिषद (NBTC) तय करती है। यह सीमा पूरी व्यवस्था की नैतिक बुनियाद है और इसे बदला नहीं जाना चाहिए। लेकिन इसका यह भी मतलब है कि कोई केंद्र मूल्य बढ़ाकर अपनी लागत की समस्या हल नहीं कर सकता, जो कि ज़्यादातर केंद्रों की असली समस्या है।',
+    'problem.p1': 'एक पूर्ण रक्त दान तीन उत्पादों में विभाजित होता है, जिनकी अर्थव्यवस्था बिल्कुल अलग है। <strong>लाल रक्त कणिकाएँ</strong> वह नैदानिक उत्पाद हैं जिसके बारे में सब सोचते हैं, जिसकी कीमत सरकार तय करती है। <strong>प्लेटलेट्स</strong> पाँच दिन चलते हैं और इनकी योजना बनाना कठिन है। <strong>प्लाज्मा</strong> एक अपवाद है: यह लगभग एक वर्ष तक जमा रहता है, हर दान पर स्वतः बनता है, और अस्पतालों को नैदानिक रूप से इसकी उतनी ज़रूरत नहीं होती जितना इकट्ठा हो जाता है।',
+    'problem.p2': 'अधिकांश भारतीय ब्लड सेंटर छोटे हैं। लगभग 4,000 केंद्र हर साल केवल कुछ हज़ार यूनिट ही प्रोसेस करते हैं, फिर भी केंद्र चलाने की स्थिर लागत, यानी एचआईवी और हेपेटाइटिस की जाँच करने वाला न्यूक्लिक एसिड टेस्टिंग (एनएटी) प्लेटफ़ॉर्म, घटक-पृथक्करण उपकरण, और कोल्ड चेन, मात्रा के साथ लगभग नहीं बदलती। छोटे केंद्र बड़े केंद्रों जितनी ही स्थिर लागत वहन करते हैं और कभी उस पैमाने तक नहीं पहुँच पाते जहाँ इसे वसूला जा सके।',
+    'problem.p3': 'यह नतीजा अपव्यय के आँकड़ों में साफ़ दिखता है। प्लाज्मा सबसे लंबी शेल्फ लाइफ वाला घटक है, फिर भी यह देश में रक्त-उत्पाद अपव्यय की सबसे बड़ी श्रेणी बना हुआ है, क्योंकि अधिकांश छोटे केंद्र इसे अलग करने, जमाने, और समय रहते सही जगह भेजने में सक्षम नहीं हैं, इससे पहले कि यह समाप्त हो जाए।',
+    'problem.callout1': 'एक दान को घटक-पृथक्करण और एनएटी जाँच के साथ प्रोसेस करने की पूर्ण लागत, एक प्रकाशित भारतीय तृतीयक-देखभाल यूनिट-लागत अध्ययन के अनुसार।',
+    'problem.callout2': 'लाल रक्त कणिकाओं की एक यूनिट के लिए NBTC प्रोसेसिंग-शुल्क सीमा, सरकारी बनाम निजी केंद्रों में। यह लगभग हर केंद्र की एकमात्र वैध नैदानिक आय है।',
+    'problem.callout3': 'आधान के लिए जारी ताज़ा जमे प्लाज्मा की एक यूनिट के लिए प्रोसेसिंग-शुल्क सीमा, जो कम रखी गई है क्योंकि प्लाज्मा की नैदानिक माँग वास्तव में सीमित है।',
+    'model.h2': 'समाधान कोई कलेक्शन ऐप नहीं है। यह इस बात में है कि प्लाज्मा कहाँ जाता है।',
+    'model.lede': 'रक्तसेतु कभी रक्त नहीं बेचता। दानकर्ता स्वेच्छा से देते हैं और उन्हें कभी भुगतान नहीं किया जाता। मरीज़ वही सरकार-सीमित शुल्क चुकाते हैं जो कहीं और चुकाते। जो बदलता है वह यह है कि जिस प्लाज्मा को कोई आधान के लिए इस्तेमाल नहीं करने वाला, उसे सही तरीके से जमाकर, एक मौजूदा NBTC-स्वीकृत माध्यम से, एक लाइसेंस प्राप्त भारतीय फ्रैक्शनेटर को बेचा जाता है, बजाय इसके कि वह फ्रीज़र में समाप्त हो जाए।',
+    'model.diagramAria': 'आरेख: मोबाइल संग्रह शाखाएँ एक केंद्रीय प्रोसेसिंग हब को फीड करती हैं, जो लाल रक्त कणिकाओं को अस्पतालों तक और अतिरिक्त प्लाज्मा को एक लाइसेंस प्राप्त फ्रैक्शनेटर तक पहुँचाता है',
+    'diagram.college1': 'कॉलेज',
+    'diagram.drive': 'शिविर',
+    'diagram.corporate1': 'कॉर्पोरेट',
+    'diagram.residential1': 'आवासीय',
+    'diagram.hub1': 'प्रोसेसिंग हब',
+    'diagram.hub2': 'एनएटी जाँच, घटक',
+    'diagram.hub3': 'पृथक्करण, कोल्ड चेन',
+    'diagram.hospitals1': 'अस्पताल',
+    'diagram.hospitals2': 'लाल रक्त कणिकाएँ, सीमित शुल्क',
+    'diagram.fract1': 'लाइसेंस प्राप्त फ्रैक्शनेटर',
+    'diagram.fract2': 'केवल अतिरिक्त प्लाज्मा',
+    'model.legend1h': 'संयुक्त संग्रह',
+    'model.legend1p': 'कई छोटे, सस्ते मोबाइल शिविर अपने-अपने उपकरण चलाने के बजाय एक ही हब को फीड करते हैं। समूह की संयुक्त इन्वेंट्री समाप्ति के नुकसान को भी घटाती है, क्योंकि संयुक्त माँग किसी एक स्थल की तुलना में कम बदलती है।',
+    'model.legend2h': 'एक लाइसेंस प्राप्त हब',
+    'model.legend2p': 'एनएटी प्लेटफ़ॉर्म, घटक विभाजक, और कोल्ड चेन, जिन्हें एक छोटा केंद्र अकेले वहन नहीं कर सकता, पूरे समूह में साझा किए जाते हैं और कहीं अधिक दान पर परिशोधित होते हैं।',
+    'model.legend3h': 'केवल अतिरिक्त, ऑडिट किया गया',
+    'model.legend3p': "प्लाज्मा किसी फ्रैक्शनेटर के पास तभी भेजा जाता है जब यह तय समाप्ति-पूर्व सीमा से पहले 'अप्रयुक्त' के रूप में दर्ज हो चुका हो। नैदानिक माँग को हमेशा पहला अधिकार है, और अतिरिक्त अनुपात प्रकाशित किया जाता है, विवेकाधीन नहीं रखा जाता।",
+    'econ.h2': 'प्रति दान, गणित',
+    'econ.lede': 'हर परिदृश्य में समान रूप से पूर्ण लागत 1,829 रुपये है। जो बदलता है वह है वह शुल्क सीमा जिसके तहत केंद्र काम करता है, और क्या अप्रयुक्त प्लाज्मा नष्ट किया जाता है या अनुबंध के तहत किसी फ्रैक्शनेटर को बेचा जाता है।',
+    'econ.routeClinical': 'आज, केवल-नैदानिक प्लाज्मा मार्ग',
+    'econ.routeFract': 'रक्तसेतु, फ्रैक्शनेटर प्लाज्मा मार्ग',
+    'econ.ratePrivate': 'निजी-दर केंद्र',
+    'econ.rateGovt': 'सरकारी-दर केंद्र',
+    'econ.lineRedCells': 'लाल रक्त कणिकाएँ (पीआरबीसी)',
+    'econ.linePlasmaClinical': 'प्लाज्मा (नैदानिक उपयोग)',
+    'econ.linePlasmaFract': 'फ्रैक्शनेटर को अतिरिक्त प्लाज्मा',
+    'econ.lineRevCost': 'राजस्व बनाम लागत',
+    'econ.pill1': '+Rs 21 प्रति यूनिट',
+    'econ.pill2': '+Rs 41 प्रति यूनिट',
+    'econ.pill3': '−Rs 429 प्रति यूनिट',
+    'econ.pill4': '−Rs 409 प्रति यूनिट',
+    'econ.sens1h': 'प्लाज्मा राजस्व पूरा समाधान नहीं है, और हम यह दिखावा नहीं कर रहे कि है।',
+    'econ.sens1p1': 'सरकारी शुल्क सीमा पर, अतिरिक्त प्लाज्मा को फ्रैक्शनेटर तक पहुँचाने से नुकसान प्रति यूनिट 429 रुपये से घटकर 409 रुपये रह जाता है। यह नुकसान को पूरी तरह बंद नहीं करता। 1,829 रुपये की आधार लागत को भी घटाना होगा, और यह केवल मात्रा (वॉल्यूम) के ज़रिए संभव है: एनएटी और घटक-पृथक्करण उपकरण मुख्यतः स्थिर लागत हैं, इसलिए कई शाखाओं की सेवा करने वाला एक हब उस लागत को आज के किसी भी अकेले छोटे केंद्र की तुलना में कहीं अधिक दान पर फैला देता है।',
+    'econ.sens1p2': 'हमें यह सटीक आँकड़ा किसी प्रकाशित स्रोत में नहीं मिला कि एक समेकित हब प्रति-यूनिट लागत को कितना घटाता है, इसलिए हम इसे एक लेबल की गई संवेदनशीलता के रूप में प्रस्तुत करते हैं, दावे के रूप में नहीं। यह मानते हुए कि प्लाज्मा हमेशा फ्रैक्शनेटर को भेजा जाता है: आधार लागत में <strong>15 प्रतिशत</strong> की कमी (लगभग 1,555 रुपये तक) सरकारी-दर के नुकसान को घटाकर लगभग 135 रुपये प्रति यूनिट कर देती है। <strong>25 प्रतिशत</strong> की कमी (लगभग 1,372 रुपये तक) इसे लगभग 48 रुपये प्रति यूनिट के लाभ में बदल देती है। वहाँ तक पहुँचना मात्रा और परिचालन की समस्या है, मूल्य-निर्धारण की नहीं, और यही कारण है कि यह मॉडल एक हब है, न कि उसी छोटे केंद्र का बड़ा संस्करण।',
+    'econ.sens1flag': 'प्लाज्मा उत्पादन प्रति 450 मिलीलीटर दान में 0.2 लीटर माना गया है, जो एक मानक नैदानिक अनुमान है, और यह उसी 1,600 रुपये प्रति लीटर की दर पर आधारित है जो भारत में अतिरिक्त प्लाज्मा के लिए वास्तव में चुकाई गई (स्रोत देखें)।',
+    'econ.sens2h': 'पूँजीगत लागत वास्तविक है, और यह दिखावा नहीं करता कि यह पहले दिन से ही स्वयं-वित्तपोषित होगा।',
+    'econ.sens2p1': 'एक उन्नत हब, यानी एनएटी प्लेटफ़ॉर्म, घटक पृथक्करण, अफेरेसिस, कोल्ड चेन, स्थापित करने में अनुमानित 1.5 से 4 करोड़ रुपये लगते हैं। 41 रुपये प्रति यूनिट मार्जिन पर, एक हब को केवल एक मध्यम 2.5 करोड़ रुपये के निर्माण को सात वर्षों में परिशोधित करने के लिए ही लगभग <strong>एक वर्ष में 88,000 दान</strong> की आवश्यकता होगी, इससे पहले कि वह अपने स्वयं के परिचालन मार्जिन को दोगुना भी कवर करे। शुरुआत से यह पार करने के लिए बहुत ऊँची बाधा है।',
+    'econ.sens2p2': 'इसलिए मॉडल क्रम के बारे में स्पष्ट है: पूँजीगत लागत केवल एक बार, सीएसआर या अनुदान पूँजी से वित्तपोषित होती है, ठीक वैसे ही जैसे सार्वजनिक स्वास्थ्य ढाँचा आमतौर पर होता है। जिसे स्वयं-निर्वाह करने योग्य होना है, और जो पीएस 8 वास्तव में माँगता है, वह है उसके बाद की दिन-प्रतिदिन की परिचालन अर्थव्यवस्था: प्रोसेसिंग शुल्क के साथ फ्रैक्शनेटर प्लाज्मा राजस्व, जो हब चलाने की चालू लागत को कवर करता है, बिना दानकर्ता को भुगतान किए और बिना मरीज़ की कीमत बढ़ाए।',
+    'calc.h4': 'अपनी खुद की धारणाओं को आज़माएँ',
+    'calc.intro': 'यह ऊपर दी गई ग्रिड जैसा ही गणित फ्रैक्शनेटर मार्ग के लिए चलाता है। केवल-नैदानिक आधार रेखा को यहाँ दोबारा नहीं दिखाया गया, क्योंकि वह एक स्थिर 300 रुपये प्रति-यूनिट शुल्क पर काम करती है, न कि प्रति-लीटर बाज़ार मूल्य पर, इसलिए दोनों एक जैसे आँकड़े नहीं हैं।',
+    'calc.lPRBC': 'लाल रक्त कणिका प्रोसेसिंग शुल्क',
+    'calc.lPlasmaPrice': 'फ्रैक्शनेटर को प्लाज्मा मूल्य, प्रति लीटर',
+    'calc.lYield': 'प्रति दान बेचा गया प्लाज्मा',
+    'calc.lCost': 'प्रति दान आधार प्रोसेसिंग लागत',
+    'calc.lVolCut': 'हब-स्तरीय मात्रा से लागत में कमी',
+    'calc.rRedCells': 'लाल रक्त कणिकाएँ',
+    'calc.rPlasmaRev': 'प्लाज्मा राजस्व',
+    'calc.rEffCost': 'प्रभावी लागत',
+    'calc.rMargin': 'प्रति यूनिट मार्जिन',
+    'compliance.h2': 'यह रक्त का व्यावसायीकरण क्यों नहीं है',
+    'compliance.lede': 'भारत में रक्त के लिए भुगतान करना अच्छे कारण से अवैध है, और किसी भी प्लाज्मा-राजस्व मॉडल में प्रोत्साहन का जोखिम वास्तविक है: जिस ऑपरेटर को मात्रा के लिए भुगतान मिलता है, उसके पास अधिक संग्रह करने का कारण होता है। रक्तसेतु को इस प्रोत्साहन को संरचनात्मक रूप से हटाने के लिए बनाया गया है, न कि इसका विरोध करने का वादा करने के लिए।',
+    'compliance.r1h': 'दानकर्ता को कभी भुगतान नहीं किया जाता',
+    'compliance.r1p': 'हर यूनिट स्वैच्छिक, अवैतनिक दान शिविरों के माध्यम से एकत्र की जाती है। दान से कोई शुल्क, छूट, या प्रोत्साहन नहीं जुड़ा होता, जो मॉडल को पेशेवर दान को पूरी तरह समाप्त करने के सर्वोच्च न्यायालय के निर्देश के सही पक्ष में रखता है।',
+    'compliance.r2h': 'मरीज़ वही सीमित शुल्क चुकाता है',
+    'compliance.r2p': 'अस्पतालों से वही NBTC-सीमा प्रोसेसिंग शुल्क लिया जाता है जो वे किसी भी ब्लड सेंटर को देते। प्लाज्मा राजस्व नैदानिक कीमत नहीं बढ़ाता, और यह किसी अस्पताल को लाल रक्त कणिकाओं तक वरीयता प्राप्त पहुँच नहीं दिलाता।',
+    'compliance.r3h': 'रक्त स्वयं कभी नहीं बेचा जाता',
+    'compliance.r3p': 'राजस्व के लिए स्थानांतरित एकमात्र उत्पाद वह प्लाज्मा है जिसे पहले से ही नैदानिक ज़रूरत से अतिरिक्त दर्ज किया जा चुका है, एक तय समाप्ति-पूर्व सीमा से पहले, उसी फ्रैक्शनेशन माध्यम में जिसे NBTC दिशानिर्देश पहले से ब्लड सेंटरों को उपयोग करने की अनुमति देते हैं।',
+    'compliance.r4h': 'नैदानिक माँग को हमेशा पहला अधिकार है',
+    'compliance.r4p': 'अतिरिक्त अनुपात, यानी एकत्र प्लाज्मा का वह हिस्सा जो कभी किसी फ्रैक्शनेटर को भेजा जाता है, सीमित, ऑडिट किया गया, और प्रकाशित होता है। किसी अस्पताल से प्लाज्मा इसलिए नहीं रोका जाता ताकि उसे कहीं और बेचा जा सके।',
+    'city.h2': 'पायलट कहाँ जाएगा',
+    'city.lede': 'तीन उम्मीदवार, राज्य के मौजूदा ब्लड-बैंक घनत्व, महानगर जनसंख्या, और क्या यह ठीक यही लेनदेन पहले भी वहाँ हो चुका है, इनकी तुलना पर आधारित।',
+    'city.thCity': 'शहर',
+    'city.thState': 'राज्य',
+    'city.thPop': 'महानगर जनसंख्या',
+    'city.thBanks': 'राज्य में लाइसेंस प्राप्त ब्लड बैंक',
+    'city.thPrecedent': 'पूर्ववृत्त',
+    'city.nagpur': 'नागपुर',
+    'city.maharashtra': 'महाराष्ट्र',
+    'city.banksNagpur': '370, किसी भी राज्य में सबसे अधिक',
+    'city.precNagpur': 'एम्स नागपुर पहले ही एक फ्रैक्शनेटर को 1,000 लीटर से अधिक अतिरिक्त प्लाज्मा बेच चुका है, जो आरटीआई से उजागर हुआ',
+    'city.indore': 'इंदौर',
+    'city.mp': 'मध्य प्रदेश',
+    'city.assessNote': 'अंतिम राष्ट्रीय आकलन के अनुसार 133',
+    'city.none': 'कोई नहीं मिला',
+    'city.coimbatore': 'कोयंबटूर',
+    'city.tn': 'तमिलनाडु',
+    'city.assessNote2': 'अंतिम राष्ट्रीय आकलन के अनुसार 265',
+    'city.pickH': 'पायलट नागपुर जाएगा, और इसकी वजह पूर्ववृत्त है, जनसंख्या नहीं।',
+    'city.pickP': 'इंदौर का महानगरीय क्षेत्र बड़ा है, और तमिलनाडु में मध्य प्रदेश से अधिक लाइसेंस प्राप्त ब्लड बैंक हैं, लेकिन किसी के पास भी किसी सार्वजनिक संस्था द्वारा वास्तव में अतिरिक्त प्लाज्मा किसी फ्रैक्शनेटर को बेचे जाने का दर्ज उदाहरण नहीं है। नागपुर के पास है। इसका मतलब है कि यह पूरा मॉडल जिस कानूनी, तार्किक, और संस्थागत माध्यम पर निर्भर करता है, वह इसी शहर में, एक सार्वजनिक अस्पताल द्वारा, एक बार पहले ही इस्तेमाल किया जा चुका है, और यह लेनदेन आरटीआई के तहत उजागर हुआ है। पहले पायलट को अपना जोखिम-बजट हब-एंड-स्पोक अर्थशास्त्र साबित करने पर खर्च करना चाहिए, न कि यह परखने में पहला बनने पर कि फ्रैक्शनेटर माध्यम काम भी करता है या नहीं।',
+    'road.h2': 'व्यवहार्यता की ओर रास्ता',
+    'road.lede': 'पहले पूँजी, फिर परिचालन, फिर प्रतिकृति, महीने-दर-महीने बताया गया ताकि हर चरण पर एक जाँचने योग्य निकास शर्त हो, न कि केवल वर्ष के अंत में।',
+    'road.m1': 'महीना 1',
+    'road.h1': 'पूँजी बंद करें और ऑफटेक समझौता तय करें',
+    'road.p1': 'सीएसआर या अनुदान पूँजी से 1.5 से 4 करोड़ रुपये जुटाएँ, पायलट शहर चुनें, और निर्माण शुरू होने से पहले, बाद में नहीं, एक लाइसेंस प्राप्त भारतीय फ्रैक्शनेटर के साथ स्थायी ऑफटेक समझौता करें, ताकि प्लाज्मा राजस्व अनुबंधित हो, केवल मान लिया गया न हो।',
+    'road.m2': 'महीने 2 से 3',
+    'road.h2b': 'हब का निर्माण करें',
+    'road.p2': 'एनएटी प्लेटफ़ॉर्म, घटक-पृथक्करण उपकरण, और कोल्ड चेन स्थापित करें; कर्मचारियों को नियुक्त और प्रशिक्षित करें; NABL प्रत्यायन प्रक्रिया खुलने के बाद नहीं, बल्कि साथ-साथ शुरू करें।',
+    'road.m3': 'महीने 4 से 5',
+    'road.h3': 'पहली शाखाओं को जोड़ें',
+    'road.p3': 'तीन से पाँच मोबाइल संग्रह शिविर, कॉलेज, कॉर्पोरेट, और आवासीय, हब से जोड़ें, और पहले दिन से चलने वाले अतिरिक्त-ट्रैकिंग लॉग के साथ संयुक्त घटक-पृथक्करण शुरू करें।',
+    'road.m4': 'महीना 6',
+    'road.h4': 'पहली प्लाज्मा खेप और पहली सार्वजनिक रिपोर्ट',
+    'road.p4': 'दस्तावेज़ीकृत-अतिरिक्त प्लाज्मा की पहली खेप फ्रैक्शनेटर को भेजें, और अतिरिक्त अनुपात व प्रति-यूनिट मार्जिन पर पहली त्रैमासिक रिपोर्ट प्रकाशित करें, पूरे पायलट के लिए वही रिपोर्टिंग प्रारूप।',
+    'road.m5': 'महीने 7 से 9',
+    'road.h5': 'शाखाएँ बढ़ाएँ, ऑडिट को परखें',
+    'road.p5': 'जितनी क्षमता हो उतनी शाखाएँ जोड़ें, दूसरी त्रैमासिक रिपोर्ट प्रकाशित करें, और मॉडल किए गए तथा मापे गए अतिरिक्त अनुपात के बीच किसी भी अंतर को सुधारने वाला निष्कर्ष मानें, न कि छिपाने वाला आँकड़ा।',
+    'road.m6': 'महीने 10 से 12',
+    'road.h6': 'परिचालन ब्रेकईवन की पुष्टि करें',
+    'road.p6': 'एक पूरे वर्ष का परिचालन डेटा संकलित करें और पुष्टि करें कि हब केवल प्रोसेसिंग शुल्क और प्लाज्मा राजस्व पर ब्रेकईवन पार करता है, पहले ही खर्च की गई पूँजी से स्वतंत्र, ठीक वैसा जैसा पीएस 8 माँगता है।',
+    'road.m7': 'महीना 13 और आगे',
+    'road.h7': 'दूसरे शहर में दोहराएँ',
+    'road.p7': 'केवल जब पहले हब के आँकड़े सार्वजनिक और स्वतंत्र रूप से सत्यापन योग्य हों, तभी वही हब डिज़ाइन, ऑफटेक ढाँचा, और ऑडिट प्रक्रिया दूसरे शहर को लाइसेंस दें, इस बार आंशिक रूप से पहले हब के अपने परिचालन अधिशेष से वित्तपोषित।',
+    'risk.h2': 'यह कहाँ टूट सकता है',
+    'risk.lede': 'स्पष्ट रूप से बताया गया, क्योंकि कोई जज वैसे भी पूछेगा।',
+    'risk.tagRisk': 'जोखिम',
+    'risk.tagMit': 'समाधान',
+    'risk.r1': 'एक ही फ्रैक्शनेटर से रिश्ता खरीदार को हब की मार्जिन रेखा पर मूल्य-निर्धारण शक्ति दे देता है।',
+    'risk.m1': 'जहाँ संभव हो एक से अधिक फ्रैक्शनेटर के साथ अनुबंध करें, और 320 रुपये की प्लाज्मा रेखा को उस मॉडल के ऊपर अतिरिक्त लाभ मानें जिसे सीमित प्रोसेसिंग शुल्क और मात्रा पर अकेले ही ब्रेकईवन पार करना है।',
+    'risk.r2': 'प्लाज्मा राजस्व नैदानिक ज़रूरत से अधिक संग्रह करने का प्रोत्साहन बनाता है।',
+    'risk.m2': 'अतिरिक्त अनुपात को सीमित करें और हर तिमाही प्रकाशित करें; फ्रैक्शनेटर को केवल एक तय समाप्ति-पूर्व सीमा के बाद भेजें, संग्रह के समय नहीं, अप्रयुक्त स्थिति दर्ज करने के बाद।',
+    'risk.r3': 'सरकारी-दर परिदृश्य को जिस मात्रा-आधारित लागत कमी की ज़रूरत है, वह एक मॉडल की गई धारणा है, अभी तक मापी गई नहीं।',
+    'risk.m3': 'इसे पायलट हब द्वारा मापी जाने वाली पहली चीज़ मानें। अगर यह कमी वास्तविकता में नहीं आती, तो सरकारी-दर खंड को निजी-दर केंद्रों के पक्ष में पीछे रखा जाएगा, जहाँ मॉडल इसके बिना भी पहले से ब्रेकईवन पार करता है।',
+    'faq.h2': 'जो सवाल जज अक्सर पूछते हैं',
+    'faq.lede': 'इनमें से किसी को भी खोलें। अगर जो जवाब आप ढूँढ रहे हैं वह यहाँ नहीं है, तो वह शायद ऊपर के जोखिम या अनुपालन अनुभागों में होगा।',
+    'faq.q1': 'क्या प्लाज्मा को फ्रैक्शनेटर तक पहुँचाना किसी और नाम से रक्त का व्यावसायीकरण ही नहीं है?',
+    'faq.a1': 'नहीं। दानकर्ता को भुगतान नहीं किया जाता, मरीज़ का शुल्क नहीं बदलता, और रक्त स्वयं कभी पैसे के लिए स्थानांतरित नहीं होता। जो बेचा जाता है वह वह प्लाज्मा है जिसे पहले से ही एक तय समाप्ति-पूर्व सीमा से पहले अप्रयुक्त दर्ज किया जा चुका है, उसी फ्रैक्शनेशन माध्यम में जिसे NBTC दिशानिर्देश पहले से अनुमति देते हैं। यह अंतर शब्दों का खेल नहीं है: यही वह है जो मॉडल को वैध बनाता है।',
+    'faq.q2': 'NBTC से प्रोसेसिंग-शुल्क सीमा बढ़वाने के लिए क्यों न कहा जाए?',
+    'faq.a2': 'वह सीमा इसलिए है ताकि रक्त तक मरीज़ की पहुँच कभी भुगतान क्षमता पर निर्भर न हो। उसे बढ़ाने से फंडिंग की कमी तो पूरी हो जाएगी, लेकिन आधान मरीज़ों के लिए महँगा हो जाएगा, जो कि ठीक वह नतीजा है जिसे यह मॉडल जानबूझकर टालने के लिए बनाया गया है। मौजूदा सीमा के भीतर रहते हुए किसी अलग स्रोत से यह कमी पूरी करना, कठिन ज़रूर है पर सही बाध्यता है।',
+    'faq.q3': 'अगर फ्रैक्शनेटर ऑफटेक अनुबंध नवीनीकृत करने से साफ़ मना कर दे तो?',
+    'faq.a3': 'हब को फिर भी केवल सीमित प्रोसेसिंग शुल्क और संग्रह मात्रा पर ब्रेकईवन पार करना होगा, प्लाज्मा राजस्व पर भरोसा किए बिना। प्लाज्मा को उस आधार के ऊपर मार्जिन के रूप में मॉडल किया गया है, आधार के रूप में नहीं। जहाँ स्थानीय बाज़ार अनुमति दे, वहाँ एक से अधिक फ्रैक्शनेटर से अनुबंध करने से यह जोखिम और कम हो जाता है।',
+    'faq.q4': 'प्रकाशित अतिरिक्त अनुपात सही है, यह कौन जाँचता है?',
+    'faq.a4': 'पायलट संबंधित राज्य रक्त आधान परिषद को त्रैमासिक रिपोर्टिंग का प्रस्ताव रखता है, साथ ही वही अप्रयुक्त-स्थिति और समाप्ति-पूर्व-सीमा लॉग किसी स्वतंत्र ऑडिटर के अनुरोध पर उपलब्ध रहेंगे। यह एक गवर्नेंस विवरण है जिसे पायलट के दौरान औपचारिक रूप दिया जाना है, न कि मॉडल चलने के बाद जोड़ा गया बाद का विचार।',
+    'faq.q5': 'कोई मौजूदा ब्लड बैंक अपनी मात्रा एक नए हब को क्यों सौंपेगा?',
+    'faq.a5': 'उसे अपने दानकर्ता संबंध या पहचान छोड़ने की ज़रूरत नहीं है। हब एक साझा प्रोसेसिंग सुविधा है: एनएटी जाँच, घटक-पृथक्करण, कोल्ड चेन, और फ्रैक्शनेटर संबंध, जिन्हें एक छोटा केंद्र अकेले नहीं बना सकता। एक केंद्र अपने संग्रह शिविरों को हब से जोड़ देता है और बाकी सब कुछ वैसे ही करता रहता है जैसे पहले करता था।',
+    'faq.q6': 'आप अभी ठीक-ठीक क्या माँग रहे हैं?',
+    'faq.a6': 'एक पायलट हब के लिए सीएसआर या अनुदान पूँजी में 1.5 से 4 करोड़ रुपये, एक लाइसेंस प्राप्त फ्रैक्शनेटर के साथ हस्ताक्षरित ऑफटेक समझौता, और सार्वजनिक रूप से त्रैमासिक परिचालन आँकड़े प्रकाशित करने के लिए बारह महीने। उस पायलट से आगे अभी कुछ नहीं माँगा जा रहा।',
+    'ask.h2': 'हम क्या माँग रहे हैं',
+    'ask.lede': 'एक पायलट: एक हब, तीन से पाँच शाखाएँ, एक फ्रैक्शनेटर ऑफटेक समझौता, एक अस्पताल नेटवर्क, बारह महीने, अतिरिक्त अनुपात और प्रति-यूनिट मार्जिन पर त्रैमासिक सार्वजनिक रिपोर्टिंग के साथ।',
+    'ask.calloutD': 'वेंचरX 2026, समस्या वक्तव्य 8: रक्त और प्लाज्मा आपूर्ति शृंखला<br>उद्यमिता प्रकोष्ठ, आईआईटी (आईएसएम) धनबाद',
+    'sources.h2': 'स्रोत और कार्यप्रणाली',
+    'sources.note': 'ऊपर दिए गए आँकड़े उद्धृत स्रोतों पर आधारित हैं। इस पेज पर दो आँकड़े स्पष्ट रूप से मॉडल किए गए हैं, स्रोत-आधारित नहीं, और जहाँ भी वे आते हैं वहाँ इनलाइन लेबल किए गए हैं: हब-स्तरीय समेकन से प्रति-यूनिट लागत में कमी, और ब्रेकईवन मात्रा का अनुमान लगाने के लिए इस्तेमाल की गई सात-वर्षीय सीधी-रेखा पूँजी परिशोधन। दोनों को पायलट द्वारा परखी जाने वाली धारणाओं के रूप में बताया गया है, दावों के रूप में नहीं।',
+    'footer.left': 'रक्तसेतु, एक वेंचरX 2026 प्रस्तुति',
+    'footer.right': 'रक्त कभी नहीं बेचा जाता। केवल अतिरिक्त प्लाज्मा, एक NBTC-स्वीकृत माध्यम के तहत।',
+  };
+
+  const DYN_EN = { perUnit: 'per unit', copied: 'Copied', copyFailed: 'Copy failed, select manually', switchDark: 'Switch to dark mode', switchLight: 'Switch to light mode' };
+  const DYN_HI = { perUnit: 'प्रति यूनिट', copied: 'कॉपी हो गया', copyFailed: 'कॉपी विफल, मैन्युअल रूप से चुनें', switchDark: 'डार्क मोड में बदलें', switchLight: 'लाइट मोड में बदलें' };
+
+  let CURRENT_LANG = localStorage.getItem('raktasetu-lang') === 'hi' ? 'hi' : 'en';
+  function tDyn(key) { return CURRENT_LANG === 'hi' ? DYN_HI[key] : DYN_EN[key]; }
+  let recalcCalcRef = null;
+
+  const I18N_ORIGINALS = new Map();
+  function applyLang(lang) {
+    CURRENT_LANG = lang;
+    document.documentElement.setAttribute('lang', lang === 'hi' ? 'hi' : 'en');
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      if (!I18N_ORIGINALS.has(el)) {
+        I18N_ORIGINALS.set(el, el.hasAttribute('data-i18n-attr') ? el.getAttribute(el.getAttribute('data-i18n-attr')) : (el.hasAttribute('data-i18n-html') ? el.innerHTML : el.textContent));
+      }
+      const key = el.getAttribute('data-i18n');
+      const attrName = el.getAttribute('data-i18n-attr');
+      const value = lang === 'hi' ? (HI[key] || I18N_ORIGINALS.get(el)) : I18N_ORIGINALS.get(el);
+      if (attrName) {
+        el.setAttribute(attrName, value);
+      } else if (el.hasAttribute('data-i18n-html')) {
+        el.innerHTML = value;
+      } else {
+        el.textContent = value;
+      }
+    });
+    const langBtn = document.getElementById('langToggle');
+    if (langBtn) langBtn.textContent = lang === 'hi' ? 'EN' : 'हिं';
+    localStorage.setItem('raktasetu-lang', lang);
+    const themeBtn = document.getElementById('themeToggle');
+    if (themeBtn) {
+      const dark = themeBtn.classList.contains('is-dark');
+      themeBtn.setAttribute('aria-label', dark ? tDyn('switchLight') : tDyn('switchDark'));
+    }
+    if (typeof recalcCalcRef === 'function') recalcCalcRef();
+  }
+
+  document.getElementById('langToggle').addEventListener('click', () => {
+    applyLang(CURRENT_LANG === 'hi' ? 'en' : 'hi');
+  });
+  applyLang(CURRENT_LANG);
+
+  (function initTheme() {
+    const root = document.documentElement;
+    const btn = document.getElementById('themeToggle');
+    const stored = localStorage.getItem('raktasetu-theme');
+    if (stored === 'light' || stored === 'dark') root.setAttribute('data-theme', stored);
+
+    function effectiveDark() {
+      const explicit = root.getAttribute('data-theme');
+      if (explicit === 'dark') return true;
+      if (explicit === 'light') return false;
+      return window.matchMedia('(prefers-color-scheme: dark)').matches;
+    }
+    function syncButton() {
+      const dark = effectiveDark();
+      btn.classList.toggle('is-dark', dark);
+      btn.setAttribute('aria-label', dark ? tDyn('switchLight') : tDyn('switchDark'));
+    }
+    btn.addEventListener('click', () => {
+      const next = effectiveDark() ? 'light' : 'dark';
+      root.setAttribute('data-theme', next);
+      localStorage.setItem('raktasetu-theme', next);
+      syncButton();
+    });
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
+      if (!localStorage.getItem('raktasetu-theme')) syncButton();
+    });
+    syncButton();
+  })();
 
   function animateCount(el) {
     const target = parseFloat(el.dataset.count);
@@ -700,6 +1263,124 @@
       if (counter) animateCount(counter);
     });
     drawFlowLines();
+  }
+
+  (function initCalculator() {
+    const inPRBC = document.getElementById('inPRBC');
+    if (!inPRBC) return;
+    const inPlasmaPrice = document.getElementById('inPlasmaPrice');
+    const inYield = document.getElementById('inYield');
+    const inCost = document.getElementById('inCost');
+    const inVolCut = document.getElementById('inVolCut');
+    const outPRBC = document.getElementById('outPRBC');
+    const outPlasmaPrice = document.getElementById('outPlasmaPrice');
+    const outYield = document.getElementById('outYield');
+    const outCost = document.getElementById('outCost');
+    const outVolCut = document.getElementById('outVolCut');
+    const resPRBC = document.getElementById('resPRBC');
+    const resPlasma = document.getElementById('resPlasma');
+    const resCost = document.getElementById('resCost');
+    const resMargin = document.getElementById('resMargin');
+    const calcPill = document.getElementById('calcPill');
+    const chips = document.querySelectorAll('.chip[data-preset]');
+
+    const fmtRs = (n) => 'Rs ' + Math.round(n).toLocaleString('en-IN');
+
+    function recalc() {
+      const prbc = parseFloat(inPRBC.value);
+      const plasmaPrice = parseFloat(inPlasmaPrice.value);
+      const yieldL = parseFloat(inYield.value);
+      const baseCost = parseFloat(inCost.value);
+      const volCut = parseFloat(inVolCut.value);
+      const effCost = baseCost * (1 - volCut / 100);
+      const plasmaRev = plasmaPrice * yieldL;
+      const revenue = prbc + plasmaRev;
+      const margin = revenue - effCost;
+
+      outPRBC.textContent = fmtRs(prbc);
+      outPlasmaPrice.textContent = fmtRs(plasmaPrice);
+      outYield.textContent = yieldL.toFixed(2) + ' L';
+      outCost.textContent = fmtRs(baseCost);
+      outVolCut.textContent = volCut + '%';
+
+      resPRBC.textContent = fmtRs(prbc);
+      resPlasma.textContent = fmtRs(plasmaRev);
+      resCost.textContent = fmtRs(effCost);
+      resMargin.textContent = (margin >= 0 ? '+' : '-') + fmtRs(Math.abs(margin));
+
+      calcPill.textContent = (margin >= 0 ? '+' : '-') + fmtRs(Math.abs(margin)) + ' ' + tDyn('perUnit');
+      calcPill.classList.toggle('good', margin >= 0);
+      calcPill.classList.toggle('bad', margin < 0);
+    }
+
+    [inPRBC, inPlasmaPrice, inYield, inCost, inVolCut].forEach(el => {
+      el.addEventListener('input', recalc);
+    });
+
+    const presets = {
+      private: { prbc: 1550, plasmaPrice: 1600, yieldL: 0.20, cost: 1829, volCut: 0 },
+      govt: { prbc: 1100, plasmaPrice: 1600, yieldL: 0.20, cost: 1829, volCut: 0 },
+    };
+    chips.forEach(chip => {
+      chip.addEventListener('click', () => {
+        const p = presets[chip.dataset.preset];
+        if (!p) return;
+        inPRBC.value = p.prbc;
+        inPlasmaPrice.value = p.plasmaPrice;
+        inYield.value = p.yieldL;
+        inCost.value = p.cost;
+        inVolCut.value = p.volCut;
+        chips.forEach(c => c.classList.toggle('is-active', c === chip));
+        recalc();
+      });
+    });
+
+    recalcCalcRef = recalc;
+    recalc();
+  })();
+
+  document.querySelectorAll('.stat[data-cite]').forEach(btn => {
+    const hint = btn.querySelector('.copy-hint');
+    btn.addEventListener('click', async () => {
+      const num = btn.querySelector('.num').textContent.trim();
+      const label = btn.querySelector('.label').textContent.trim();
+      const cite = btn.dataset.cite || '';
+      const url = btn.dataset.citeUrl || '';
+      const text = num + ' ' + label + ' (Source: ' + cite + (url ? ', ' + url : '') + ')';
+      const restore = () => { if (hint) hint.textContent = CURRENT_LANG === 'hi' ? HI['copy.hint'] : (I18N_ORIGINALS.get(hint) || hint.textContent); };
+      try {
+        await navigator.clipboard.writeText(text);
+        if (hint) {
+          hint.textContent = tDyn('copied');
+          setTimeout(restore, 1400);
+        }
+      } catch (err) {
+        if (hint) {
+          hint.textContent = tDyn('copyFailed');
+          setTimeout(restore, 1800);
+        }
+      }
+    });
+  });
+
+  const navLinks = document.querySelectorAll('.navlinks a[href^="#"]');
+  const spySections = Array.from(navLinks)
+    .map(a => document.querySelector(a.getAttribute('href')))
+    .filter(Boolean);
+  if ('IntersectionObserver' in window && spySections.length) {
+    const spy = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          const id = '#' + e.target.id;
+          navLinks.forEach(a => {
+            const isActive = a.getAttribute('href') === id;
+            a.classList.toggle('active', isActive);
+            if (isActive) a.setAttribute('aria-current', 'true'); else a.removeAttribute('aria-current');
+          });
+        }
+      });
+    }, { rootMargin: '-40% 0px -50% 0px', threshold: 0 });
+    spySections.forEach(sec => spy.observe(sec));
   }
 </script>
 
