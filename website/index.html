@@ -3,20 +3,20 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>RaktaSetu | A self-sustaining blood and plasma model</title>
-<meta name="description" content="RaktaSetu funds India's blood supply chain by monetizing the surplus plasma blood banks already discard, not by selling blood.">
+<title>Rudhira | A self-sustaining blood and plasma model</title>
+<meta name="description" content="Rudhira funds India's blood supply chain by monetizing the surplus plasma blood banks already discard, not by selling blood.">
 <meta property="og:type" content="website">
-<meta property="og:title" content="RaktaSetu | A self-sustaining blood and plasma model">
-<meta property="og:description" content="RaktaSetu funds India's blood supply chain by monetizing the surplus plasma blood banks already discard, not by selling blood.">
+<meta property="og:title" content="Rudhira | A self-sustaining blood and plasma model">
+<meta property="og:description" content="Rudhira funds India's blood supply chain by monetizing the surplus plasma blood banks already discard, not by selling blood.">
 <meta property="og:image" content="https://soaked1.github.io/raktasetu-venturex/website/og-image.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:url" content="https://soaked1.github.io/raktasetu-venturex/website/">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="RaktaSetu | A self-sustaining blood and plasma model">
-<meta name="twitter:description" content="RaktaSetu funds India's blood supply chain by monetizing the surplus plasma blood banks already discard, not by selling blood.">
+<meta name="twitter:title" content="Rudhira | A self-sustaining blood and plasma model">
+<meta name="twitter:description" content="Rudhira funds India's blood supply chain by monetizing the surplus plasma blood banks already discard, not by selling blood.">
 <meta name="twitter:image" content="https://soaked1.github.io/raktasetu-venturex/website/og-image.png">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><circle cx=%2250%22 cy=%2250%22 r=%2242%22 fill=%22%23c81e3a%22/></svg>">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><circle cx=%2250%22 cy=%2250%22 r=%2248%22 fill=%22%23170404%22/><circle cx=%2250%22 cy=%2250%22 r=%2232%22 stroke=%22%23c81e3a%22 stroke-width=%226%22 fill=%22none%22 opacity=%220.5%22/><circle cx=%2250%22 cy=%2250%22 r=%2220%22 stroke=%22%23c81e3a%22 stroke-width=%226%22 fill=%22none%22 opacity=%220.75%22/><circle cx=%2250%22 cy=%2250%22 r=%229%22 fill=%22%23e02020%22/></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -239,6 +239,7 @@
   .callout + .callout{margin-top:16px;}
   .callout .k{font-family:var(--font-mono); font-size:26px; font-weight:600; color:var(--ink);}
   .callout .d{font-size:14.5px; color:var(--ink-soft); margin-top:6px;}
+  .brand-mark{width:72px; height:auto; border-radius:10px; display:block; margin-bottom:14px;}
 
   /* ---- Model diagram ---- */
   .model-wrap{
@@ -437,23 +438,171 @@
     .wrap{max-width:100%;}
     .sources ol{columns:1;}
   }
+
+  /* ---- Splash intro ----
+     Sequence: a brief held dark beat -> the solid R suddenly accelerates and
+     slams toward camera, filling the frame with motion blur and a flash of
+     impact -> it clears, and the ghosted rings + रुधिर/RUDHIRA settle in and
+     hold. */
+  body.splash-lock{overflow:hidden;}
+  #splash{
+    position:fixed; inset:0; z-index:1000;
+    display:flex; align-items:center; justify-content:center;
+    background:radial-gradient(circle at 50% 45%, #2a0505 0%, #150202 65%, #0a0101 100%);
+    overflow:hidden;
+    transition:opacity 1.1s ease;
+  }
+  #splash.hide{opacity:0; pointer-events:none;}
+
+  #splash::before{
+    content:''; position:absolute; inset:0; z-index:0; pointer-events:none;
+    background:radial-gradient(circle at 50% 46%, rgba(255,90,90,.7), transparent 62%);
+    opacity:0; animation:splashFlash .9s ease-out .9s forwards;
+  }
+  @keyframes splashFlash{ 0%{opacity:0;} 45%{opacity:1;} 100%{opacity:0;} }
+  #splash::after{
+    content:''; position:absolute; inset:-20%; z-index:4; pointer-events:none;
+    background:linear-gradient(115deg, transparent 42%, rgba(255,255,255,.55) 50%, transparent 58%);
+    mix-blend-mode:screen; opacity:0;
+    animation:splashShine 1.25s ease-out 1s forwards;
+  }
+  @keyframes splashShine{
+    0%{ transform:translateX(-60%) rotate(8deg); opacity:0; }
+    20%{ opacity:.9; }
+    60%{ opacity:.4; }
+    100%{ transform:translateX(60%) rotate(8deg); opacity:0; }
+  }
+
+  #splash .particles{position:absolute; inset:0; z-index:1; pointer-events:none;}
+  #splash .particle{
+    position:absolute; width:3px; height:3px; border-radius:50%;
+    background:rgba(255,120,120,.7); box-shadow:0 0 6px 1px rgba(255,90,90,.4);
+    opacity:0; animation:splashParticle 3.6s ease-in-out infinite;
+  }
+  @keyframes splashParticle{
+    0%,100%{opacity:0; transform:translateY(0);}
+    50%{opacity:.7; transform:translateY(-14px);}
+  }
+  #splash .streak{
+    position:absolute; top:-10%; width:1px; height:120%;
+    background:linear-gradient(to bottom, transparent, rgba(255,90,90,.35), transparent);
+    opacity:0; transform:rotate(14deg);
+    animation:splashStreakFade 4s ease-in-out infinite;
+  }
+  @keyframes splashStreakFade{ 0%,100%{opacity:0;} 50%{opacity:.5;} }
+
+  /* impact: the solid R suddenly accelerates and slams toward camera */
+  #splash .impact-r{
+    position:absolute; left:50%; top:44%; z-index:3;
+    font-family:Georgia,'Times New Roman',serif; font-weight:700; color:#ff2d2d;
+    text-shadow:0 0 40px rgba(255,60,60,.9), 0 0 100px rgba(255,20,20,.65);
+    transform:translate(-50%,-50%) scale(.3); opacity:0;
+    font-size:200px; user-select:none; pointer-events:none;
+    animation:splashImpact 1.05s cubic-bezier(.55,.06,.68,.19) .4s forwards;
+  }
+  @keyframes splashImpact{
+    0%{ transform:translate(-50%,-50%) scale(.3); opacity:.9; filter:blur(0); }
+    55%{ opacity:1; filter:blur(2px); }
+    78%{ transform:translate(-50%,-50%) scale(9); filter:blur(16px); opacity:1; }
+    92%{ transform:translate(-50%,-50%) scale(15); filter:blur(4px); opacity:1; }
+    100%{ transform:translate(-50%,-50%) scale(19); filter:blur(0); opacity:0; }
+  }
+
+  /* settle: ghosted rings hold behind the wordmark once the impact clears */
+  #splash .ring{
+    position:absolute; left:50%; top:50%; z-index:2;
+    font-family:Georgia,'Times New Roman',serif; font-weight:700; color:#c81e1e;
+    transform:translate(-50%,-50%) scale(.5); opacity:0; user-select:none; pointer-events:none;
+  }
+  #splash .ring1{font-size:110px; --settle:.32; animation:splashPulse 3.2s ease-out 1.75s forwards;}
+  #splash .ring2{font-size:150px; --settle:.24; animation:splashPulse 3.2s ease-out 2.45s forwards;}
+  #splash .ring3{font-size:190px; --settle:.17; animation:splashPulse 3.2s ease-out 3.15s forwards;}
+  #splash .ring4{font-size:230px; --settle:.11; animation:splashPulse 3.2s ease-out 3.85s forwards;}
+  @keyframes splashPulse{
+    0%{opacity:0; transform:translate(-50%,-50%) scale(.6);}
+    100%{opacity:var(--settle,.16); transform:translate(-50%,-50%) scale(1);}
+  }
+  #splash .name-wrap{ position:relative; text-align:center; z-index:3; }
+  #splash .hindi{
+    font-family:'Noto Sans Devanagari', Arial, sans-serif; font-weight:700; font-size:52px;
+    color:#ff3b3b; text-shadow:0 0 24px rgba(255,59,59,.35); opacity:0; letter-spacing:2px;
+    filter:blur(6px); transform:translateY(14px) scale(.94);
+    animation:splashRise 2.5s cubic-bezier(.19,1,.22,1) 1.9s forwards;
+  }
+  @keyframes splashRise{ to{ opacity:1; filter:blur(0); transform:translateY(0) scale(1); } }
+  #splash .latin{
+    margin-top:14px; font-family:Arial, sans-serif; font-weight:400; font-size:14px;
+    letter-spacing:6px; color:#d97a7a; opacity:0; animation:splashFade 2.1s ease-out 4.7s forwards;
+  }
+  @keyframes splashFade{ to{ opacity:1; } }
+  @media (max-width:480px){
+    #splash .impact-r{font-size:120px;}
+    #splash .ring1{font-size:70px;} #splash .ring2{font-size:96px;}
+    #splash .ring3{font-size:122px;} #splash .ring4{font-size:148px;}
+    #splash .hindi{font-size:38px;}
+  }
+  @media (prefers-reduced-motion: reduce){ #splash{display:none;} }
 </style>
 </head>
 <body>
+
+<div id="splash" role="presentation" aria-hidden="true">
+  <div class="particles">
+    <span class="particle" style="left:18%; top:22%; animation-delay:.2s;"></span>
+    <span class="particle" style="left:74%; top:16%; animation-delay:1.1s;"></span>
+    <span class="particle" style="left:32%; top:78%; animation-delay:.6s;"></span>
+    <span class="particle" style="left:82%; top:70%; animation-delay:1.6s;"></span>
+    <span class="particle" style="left:8%; top:60%; animation-delay:2.1s;"></span>
+    <span class="particle" style="left:60%; top:85%; animation-delay:.9s;"></span>
+    <span class="particle" style="left:90%; top:40%; animation-delay:1.9s;"></span>
+    <span class="particle" style="left:48%; top:10%; animation-delay:2.6s;"></span>
+    <span class="particle" style="left:24%; top:45%; animation-delay:1.3s;"></span>
+    <span class="particle" style="left:68%; top:52%; animation-delay:2.3s;"></span>
+    <span class="streak" style="left:20%; animation-delay:.3s;"></span>
+    <span class="streak" style="left:55%; animation-delay:1.4s;"></span>
+    <span class="streak" style="left:80%; animation-delay:2.2s;"></span>
+  </div>
+  <div class="impact-r">R</div>
+
+  <div class="ring ring1">R</div>
+  <div class="ring ring2">R</div>
+  <div class="ring ring3">R</div>
+  <div class="ring ring4">R</div>
+  <div class="name-wrap">
+    <div class="hindi">रुधिर</div>
+    <div class="latin">R U D H I R A</div>
+  </div>
+</div>
+<script>
+(function(){
+  var splash = document.getElementById('splash');
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var seen = sessionStorage.getItem('rudhira-splash-seen') === '1';
+  if (reduce || seen) { splash.remove(); return; }
+  document.body.classList.add('splash-lock');
+  sessionStorage.setItem('rudhira-splash-seen', '1');
+  window.setTimeout(function(){
+    splash.classList.add('hide');
+    document.body.classList.remove('splash-lock');
+    window.setTimeout(function(){ splash.remove(); }, 1200);
+  }, 8450);
+})();
+</script>
 
 <a class="skip-link" href="#top" data-i18n="nav.skip">Skip to main content</a>
 
 <header>
   <nav class="wrap" aria-label="Primary">
     <a class="brand" href="#top">
-      <svg width="26" height="26" viewBox="0 0 26 26" fill="none" aria-hidden="true"><circle cx="13" cy="13" r="11" stroke="var(--accent)" stroke-width="2"/><circle cx="13" cy="13" r="3.5" fill="var(--accent)"/></svg>
-      RaktaSetu
+      <svg width="26" height="26" viewBox="0 0 26 26" fill="none" aria-hidden="true"><circle cx="13" cy="13" r="11" stroke="var(--accent)" stroke-width="1.3" opacity="0.35"/><circle cx="13" cy="13" r="8" stroke="var(--accent)" stroke-width="1.3" opacity="0.55"/><circle cx="13" cy="13" r="5.2" stroke="var(--accent)" stroke-width="1.3" opacity="0.8"/><circle cx="13" cy="13" r="2.1" fill="var(--accent)"/></svg>
+      Rudhira
     </a>
     <ul class="navlinks">
       <li><a href="#problem" data-i18n="nav.problem">The problem</a></li>
       <li><a href="#model" data-i18n="nav.model">The model</a></li>
       <li><a href="#economics" data-i18n="nav.economics">Economics</a></li>
       <li><a href="#compliance" data-i18n="nav.compliance">Compliance</a></li>
+      <li><a href="#loyalty" data-i18n="nav.loyalty">Rewards</a></li>
       <li><a href="#city" data-i18n="nav.city">Pilot city</a></li>
       <li><a href="#roadmap" data-i18n="nav.roadmap">Roadmap</a></li>
       <li><a href="#faq" data-i18n="nav.faq">FAQ</a></li>
@@ -559,7 +708,7 @@
     <div class="wrap">
       <div class="section-head reveal">
         <h2 data-i18n="model.h2">The fix is not a collection app. It is where the plasma goes.</h2>
-        <p class="lede" data-i18n="model.lede">RaktaSetu never sells blood. Donors give voluntarily and are never paid. Patients pay the same government-capped fee as anywhere else. What changes is that plasma nobody is going to transfuse gets frozen correctly and sold, under an existing NBTC-sanctioned channel, to a licensed Indian fractionator instead of expiring in a freezer.</p>
+        <p class="lede" data-i18n="model.lede">Rudhira never sells blood. Donors give voluntarily and are never paid. Patients pay the same government-capped fee as anywhere else. What changes is that plasma nobody is going to transfuse gets frozen correctly and sold, under an existing NBTC-sanctioned channel, to a licensed Indian fractionator instead of expiring in a freezer.</p>
       </div>
       <div class="model-wrap reveal">
         <svg id="flow-svg" viewBox="0 0 900 360" xmlns="http://www.w3.org/2000/svg" role="img" data-i18n-attr="aria-label" data-i18n="model.diagramAria" aria-label="Diagram: mobile collection spokes feed a central processing hub, which routes red cells to hospitals and surplus plasma to a licensed fractionator">
@@ -646,7 +795,7 @@
           <span class="margin-pill good" data-i18n="econ.pill1">+Rs 21 per unit</span>
         </div>
         <div class="econ-cell reveal" style="transition-delay:90ms">
-          <div class="route" data-i18n="econ.routeFract">RaktaSetu, fractionator plasma route</div>
+          <div class="route" data-i18n="econ.routeFract">Rudhira, fractionator plasma route</div>
           <div class="rate" data-i18n="econ.ratePrivate">Private-rate centre</div>
           <div class="econ-line"><span data-i18n="econ.lineRedCells">Red cells (PRBC)</span><span>Rs 1,550</span></div>
           <div class="econ-line"><span data-i18n="econ.linePlasmaFract">Surplus plasma to fractionator</span><span>Rs 320</span></div>
@@ -662,7 +811,7 @@
           <span class="margin-pill bad" data-i18n="econ.pill3">&minus;Rs 429 per unit</span>
         </div>
         <div class="econ-cell reveal" style="transition-delay:270ms">
-          <div class="route" data-i18n="econ.routeFract">RaktaSetu, fractionator plasma route</div>
+          <div class="route" data-i18n="econ.routeFract">Rudhira, fractionator plasma route</div>
           <div class="rate" data-i18n="econ.rateGovt">Government-rate centre</div>
           <div class="econ-line"><span data-i18n="econ.lineRedCells">Red cells (PRBC)</span><span>Rs 1,100</span></div>
           <div class="econ-line"><span data-i18n="econ.linePlasmaFract">Surplus plasma to fractionator</span><span>Rs 320</span></div>
@@ -731,7 +880,7 @@
     <div class="wrap">
       <div class="section-head reveal">
         <h2 data-i18n="compliance.h2">Why this does not commercialize blood</h2>
-        <p class="lede" data-i18n="compliance.lede">Paying for blood is illegal in India for good reason, and the incentive risk in any plasma-revenue model is real: an operator paid for volume has a reason to over-collect. RaktaSetu is built to remove that incentive structurally, not promise to resist it.</p>
+        <p class="lede" data-i18n="compliance.lede">Paying for blood is illegal in India for good reason, and the incentive risk in any plasma-revenue model is real: an operator paid for volume has a reason to over-collect. Rudhira is built to remove that incentive structurally, not promise to resist it.</p>
       </div>
       <div class="rulelist">
         <div class="rule-row reveal" style="transition-delay:0ms">
@@ -761,6 +910,94 @@
             <h3 data-i18n="compliance.r4h">Clinical demand has first claim, always</h3>
             <p data-i18n="compliance.r4p">The surplus ratio, the share of collected plasma that is ever routed to a fractionator, is capped, audited, and published. No plasma is withheld from a hospital that needs it in order to sell it elsewhere.</p>
           </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LOYALTY -->
+  <section id="loyalty">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <h2 data-i18n="loyalty.h2">Donors get value, not payment</h2>
+        <p class="lede" data-i18n="loyalty.lede"><em>Common Cause v. Union of India</em> (1996) is unambiguous: blood and plasma can never be bought or sold, and no donor reward can be cash, a cash-equivalent, or a discount tied to donating. Rudhira's donor program is built entirely from non-monetary rewards, health services, recognition, and priority access, across four tiers keyed to donation frequency in a rolling 12-month window.</p>
+      </div>
+      <div class="city-table-wrap reveal">
+        <table class="city-table">
+          <thead>
+            <tr><th scope="col" data-i18n="loyalty.thTier">Tier</th><th scope="col" data-i18n="loyalty.thThreshold">Threshold (rolling 12 months)</th><th scope="col" data-i18n="loyalty.thHealth">Health benefit</th><th scope="col" data-i18n="loyalty.thOther">Other benefits</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row" data-i18n="loyalty.tierBronze">Bronze</th>
+              <td data-i18n="loyalty.threshBronze">1st donation</td>
+              <td data-i18n="loyalty.healthBronze">Baseline screening on every donation: haemoglobin, blood pressure, weight, pulse</td>
+              <td data-i18n="loyalty.otherBronze">Digital donor certificate, donor badge</td>
+            </tr>
+            <tr>
+              <th scope="row" data-i18n="loyalty.tierSilver">Silver</th>
+              <td data-i18n="loyalty.threshSilver">2 to 3 donations</td>
+              <td data-i18n="loyalty.healthSilver">+ one free annual basic panel: CBC, blood sugar, cholesterol</td>
+              <td data-i18n="loyalty.otherSilver">Priority queue at donation camps, donor community access</td>
+            </tr>
+            <tr>
+              <th scope="row" data-i18n="loyalty.tierGold">Gold</th>
+              <td data-i18n="loyalty.threshGold">4 to 5 donations, the medical ceiling for whole blood</td>
+              <td data-i18n="loyalty.healthGold">+ one free annual comprehensive panel: CBC, lipid profile, liver and kidney function, thyroid, with priority scheduling at partner diagnostic centres</td>
+              <td data-i18n="loyalty.otherGold">Featured recognition in the newsletter and on social media, with consent, plus early access to camps near the donor</td>
+            </tr>
+            <tr class="is-pick">
+              <th scope="row" data-i18n="loyalty.tierElite">Plasma Elite</th>
+              <td data-i18n="loyalty.threshElite">6+ donations on the plasma or apheresis track</td>
+              <td data-i18n="loyalty.healthElite">+ the Gold panel plus ECG and a vitamin and mineral panel, plus micro health-insurance for donation-related complications</td>
+              <td data-i18n="loyalty.otherElite">VIP recognition, a seat on the donor advisory council</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="sensitivity reveal" style="margin-top:24px;">
+        <h4 data-i18n="loyalty.trackH">Plasma Elite is a separate ladder, not a higher rung</h4>
+        <p data-i18n="loyalty.trackP">Apheresis donors can safely donate far more often than whole-blood donors, so the platform counts the two tracks independently. A donor who qualifies on both holds whichever tier is higher for benefit purposes.</p>
+      </div>
+      <div class="rulelist" style="margin-top:24px;">
+        <div class="rule-row reveal" style="transition-delay:0ms">
+          <div class="rn mono">01</div>
+          <div>
+            <h3 data-i18n="loyalty.r1h">The window rolls, it does not reset on a fixed date</h3>
+            <p data-i18n="loyalty.r1p">Every verified donation recalculates the donor's tier from a trailing 365-day count, not a calendar year. An upgrade applies the moment a threshold is crossed. A downgrade only takes effect if the count is still short 30 days later, so one slow month does not cost a donor their tier.</p>
+          </div>
+        </div>
+        <div class="rule-row reveal" style="transition-delay:70ms">
+          <div class="rn mono">02</div>
+          <div>
+            <h3 data-i18n="loyalty.r2h">Every entitlement is dated, it never stacks</h3>
+            <p data-i18n="loyalty.r2p">Each tier's checkup benefit is issued once per 12-month cycle, not once per donation. It has to be booked at a partner diagnostic centre inside that cycle or it lapses; unused entitlements do not carry over or accumulate.</p>
+          </div>
+        </div>
+        <div class="rule-row reveal" style="transition-delay:140ms">
+          <div class="rn mono">03</div>
+          <div>
+            <h3 data-i18n="loyalty.r3h">Donation counts come from the blood bank, never from the donor</h3>
+            <p data-i18n="loyalty.r3p">A donation only counts toward tier progress once a partner blood bank or camp confirms it through the platform. Nothing a donor enters in the app can move their own tier.</p>
+          </div>
+        </div>
+        <div class="rule-row reveal" style="transition-delay:210ms">
+          <div class="rn mono">04</div>
+          <div>
+            <h3 data-i18n="loyalty.r4h">One verified identity, one donor record</h3>
+            <p data-i18n="loyalty.r4p">Registration is tied to a platform-verified ID (Aadhaar e-KYC or equivalent), stored as a hashed reference rather than the number itself, so a second account cannot reset a donor's threshold. The same check blocks a donation from counting if it falls inside the mandatory medical gap since the last one, 90 days for whole blood, a shorter, medically set gap for plasma.</p>
+          </div>
+        </div>
+      </div>
+      <div class="reveal" style="margin-top:24px;">
+        <h4 style="font-size:15.5px; margin-bottom:14px;" data-i18n="loyalty.sampleH">How a tier reads inside the app</h4>
+        <div class="callout">
+          <div class="k mono" data-i18n="loyalty.sample1k">SILVER</div>
+          <div class="d" data-i18n="loyalty.sample1d">You're a Silver donor. Beyond your basic screening, you've unlocked one free annual health panel and priority queuing at camps.</div>
+        </div>
+        <div class="callout">
+          <div class="k mono" data-i18n="loyalty.sample2k">PLASMA ELITE</div>
+          <div class="d" data-i18n="loyalty.sample2d">You're Plasma Elite, our most committed donor track. Your full annual health package and donation-related micro-insurance are active.</div>
         </div>
       </div>
     </div>
@@ -924,7 +1161,8 @@
       </div>
       <div class="reveal">
         <div class="callout">
-          <div class="k mono">Team RaktaSetu</div>
+          <img class="brand-mark" src="assets/rudhira-mark.png" alt="Rudhira brand mark" loading="lazy">
+          <div class="k mono">Team Rudhira</div>
           <div class="d" data-i18n-html="ask.calloutD">VentureX 2026, Problem Statement 8: Blood and Plasma Supply Chain<br>Entrepreneurship Cell, IIT (ISM) Dhanbad</div>
         </div>
       </div>
@@ -956,7 +1194,7 @@
 
 <footer>
   <div class="wrap foot-row">
-    <span data-i18n="footer.left">RaktaSetu, a VentureX 2026 submission</span>
+    <span data-i18n="footer.left">Rudhira, a VentureX 2026 submission</span>
     <span data-i18n="footer.right">Blood is never sold. Only surplus plasma, under an NBTC-sanctioned channel.</span>
   </div>
 </footer>
@@ -970,6 +1208,7 @@
     'nav.model': 'मॉडल',
     'nav.economics': 'अर्थशास्त्र',
     'nav.compliance': 'अनुपालन',
+    'nav.loyalty': 'पुरस्कार',
     'nav.city': 'पायलट शहर',
     'nav.roadmap': 'रोडमैप',
     'nav.faq': 'सामान्य प्रश्न',
@@ -998,7 +1237,7 @@
     'problem.callout2': 'लाल रक्त कणिकाओं की एक यूनिट के लिए NBTC प्रोसेसिंग-शुल्क सीमा, सरकारी बनाम निजी केंद्रों में। यह लगभग हर केंद्र की एकमात्र वैध नैदानिक आय है।',
     'problem.callout3': 'आधान के लिए जारी ताज़ा जमे प्लाज्मा की एक यूनिट के लिए प्रोसेसिंग-शुल्क सीमा, जो कम रखी गई है क्योंकि प्लाज्मा की नैदानिक माँग वास्तव में सीमित है।',
     'model.h2': 'समाधान कोई कलेक्शन ऐप नहीं है। यह इस बात में है कि प्लाज्मा कहाँ जाता है।',
-    'model.lede': 'रक्तसेतु कभी रक्त नहीं बेचता। दानकर्ता स्वेच्छा से देते हैं और उन्हें कभी भुगतान नहीं किया जाता। मरीज़ वही सरकार-सीमित शुल्क चुकाते हैं जो कहीं और चुकाते। जो बदलता है वह यह है कि जिस प्लाज्मा को कोई आधान के लिए इस्तेमाल नहीं करने वाला, उसे सही तरीके से जमाकर, एक मौजूदा NBTC-स्वीकृत माध्यम से, एक लाइसेंस प्राप्त भारतीय फ्रैक्शनेटर को बेचा जाता है, बजाय इसके कि वह फ्रीज़र में समाप्त हो जाए।',
+    'model.lede': 'रुधिर कभी रक्त नहीं बेचता। दानकर्ता स्वेच्छा से देते हैं और उन्हें कभी भुगतान नहीं किया जाता। मरीज़ वही सरकार-सीमित शुल्क चुकाते हैं जो कहीं और चुकाते। जो बदलता है वह यह है कि जिस प्लाज्मा को कोई आधान के लिए इस्तेमाल नहीं करने वाला, उसे सही तरीके से जमाकर, एक मौजूदा NBTC-स्वीकृत माध्यम से, एक लाइसेंस प्राप्त भारतीय फ्रैक्शनेटर को बेचा जाता है, बजाय इसके कि वह फ्रीज़र में समाप्त हो जाए।',
     'model.diagramAria': 'आरेख: मोबाइल संग्रह शाखाएँ एक केंद्रीय प्रोसेसिंग हब को फीड करती हैं, जो लाल रक्त कणिकाओं को अस्पतालों तक और अतिरिक्त प्लाज्मा को एक लाइसेंस प्राप्त फ्रैक्शनेटर तक पहुँचाता है',
     'diagram.college1': 'कॉलेज',
     'diagram.drive': 'शिविर',
@@ -1020,7 +1259,7 @@
     'econ.h2': 'प्रति दान, गणित',
     'econ.lede': 'हर परिदृश्य में समान रूप से पूर्ण लागत 1,829 रुपये है। जो बदलता है वह है वह शुल्क सीमा जिसके तहत केंद्र काम करता है, और क्या अप्रयुक्त प्लाज्मा नष्ट किया जाता है या अनुबंध के तहत किसी फ्रैक्शनेटर को बेचा जाता है।',
     'econ.routeClinical': 'आज, केवल-नैदानिक प्लाज्मा मार्ग',
-    'econ.routeFract': 'रक्तसेतु, फ्रैक्शनेटर प्लाज्मा मार्ग',
+    'econ.routeFract': 'रुधिर, फ्रैक्शनेटर प्लाज्मा मार्ग',
     'econ.ratePrivate': 'निजी-दर केंद्र',
     'econ.rateGovt': 'सरकारी-दर केंद्र',
     'econ.lineRedCells': 'लाल रक्त कणिकाएँ (पीआरबीसी)',
@@ -1050,7 +1289,7 @@
     'calc.rEffCost': 'प्रभावी लागत',
     'calc.rMargin': 'प्रति यूनिट मार्जिन',
     'compliance.h2': 'यह रक्त का व्यावसायीकरण क्यों नहीं है',
-    'compliance.lede': 'भारत में रक्त के लिए भुगतान करना अच्छे कारण से अवैध है, और किसी भी प्लाज्मा-राजस्व मॉडल में प्रोत्साहन का जोखिम वास्तविक है: जिस ऑपरेटर को मात्रा के लिए भुगतान मिलता है, उसके पास अधिक संग्रह करने का कारण होता है। रक्तसेतु को इस प्रोत्साहन को संरचनात्मक रूप से हटाने के लिए बनाया गया है, न कि इसका विरोध करने का वादा करने के लिए।',
+    'compliance.lede': 'भारत में रक्त के लिए भुगतान करना अच्छे कारण से अवैध है, और किसी भी प्लाज्मा-राजस्व मॉडल में प्रोत्साहन का जोखिम वास्तविक है: जिस ऑपरेटर को मात्रा के लिए भुगतान मिलता है, उसके पास अधिक संग्रह करने का कारण होता है। रुधिर को इस प्रोत्साहन को संरचनात्मक रूप से हटाने के लिए बनाया गया है, न कि इसका विरोध करने का वादा करने के लिए।',
     'compliance.r1h': 'दानकर्ता को कभी भुगतान नहीं किया जाता',
     'compliance.r1p': 'हर यूनिट स्वैच्छिक, अवैतनिक दान शिविरों के माध्यम से एकत्र की जाती है। दान से कोई शुल्क, छूट, या प्रोत्साहन नहीं जुड़ा होता, जो मॉडल को पेशेवर दान को पूरी तरह समाप्त करने के सर्वोच्च न्यायालय के निर्देश के सही पक्ष में रखता है।',
     'compliance.r2h': 'मरीज़ वही सीमित शुल्क चुकाता है',
@@ -1059,6 +1298,43 @@
     'compliance.r3p': 'राजस्व के लिए स्थानांतरित एकमात्र उत्पाद वह प्लाज्मा है जिसे पहले से ही नैदानिक ज़रूरत से अतिरिक्त दर्ज किया जा चुका है, एक तय समाप्ति-पूर्व सीमा से पहले, उसी फ्रैक्शनेशन माध्यम में जिसे NBTC दिशानिर्देश पहले से ब्लड सेंटरों को उपयोग करने की अनुमति देते हैं।',
     'compliance.r4h': 'नैदानिक माँग को हमेशा पहला अधिकार है',
     'compliance.r4p': 'अतिरिक्त अनुपात, यानी एकत्र प्लाज्मा का वह हिस्सा जो कभी किसी फ्रैक्शनेटर को भेजा जाता है, सीमित, ऑडिट किया गया, और प्रकाशित होता है। किसी अस्पताल से प्लाज्मा इसलिए नहीं रोका जाता ताकि उसे कहीं और बेचा जा सके।',
+    'loyalty.h2': 'दानदाताओं को मूल्य मिलता है, भुगतान नहीं',
+    'loyalty.lede': 'Common Cause बनाम भारत संघ (1996) मामला स्पष्ट है: रक्त और प्लाज्मा कभी खरीदे या बेचे नहीं जा सकते, और किसी भी दानदाता पुरस्कार में नकद, नकद-समतुल्य, या दान से जुड़ी छूट नहीं हो सकती। रुधिर का दानदाता कार्यक्रम पूरी तरह गैर-मौद्रिक पुरस्कारों पर बना है, स्वास्थ्य सेवाएँ, सम्मान, और प्राथमिकता पहुँच, जो एक घूमते हुए 12-महीने की अवधि में दान की आवृत्ति पर आधारित चार स्तरों में बँटा है।',
+    'loyalty.thTier': 'स्तर',
+    'loyalty.thThreshold': 'सीमा (घूमते 12 महीने)',
+    'loyalty.thHealth': 'स्वास्थ्य लाभ',
+    'loyalty.thOther': 'अन्य लाभ',
+    'loyalty.tierBronze': 'ब्रॉन्ज़',
+    'loyalty.threshBronze': 'पहला दान',
+    'loyalty.healthBronze': 'हर दान पर आधारभूत जाँच: हीमोग्लोबिन, रक्तचाप, वज़न, नाड़ी',
+    'loyalty.otherBronze': 'डिजिटल दानदाता प्रमाणपत्र, दानदाता बैज',
+    'loyalty.tierSilver': 'सिल्वर',
+    'loyalty.threshSilver': '2 से 3 दान',
+    'loyalty.healthSilver': '+ एक मुफ़्त वार्षिक आधारभूत पैनल: CBC, ब्लड शुगर, कोलेस्ट्रॉल',
+    'loyalty.otherSilver': 'दान शिविरों में प्राथमिकता कतार, दानदाता समुदाय तक पहुँच',
+    'loyalty.tierGold': 'गोल्ड',
+    'loyalty.threshGold': '4 से 5 दान, संपूर्ण रक्त के लिए चिकित्सीय सीमा',
+    'loyalty.healthGold': '+ एक मुफ़्त वार्षिक व्यापक पैनल: CBC, लिपिड प्रोफ़ाइल, लिवर और किडनी कार्य, थायरॉइड, साथ ही साझेदार डायग्नोस्टिक केंद्रों में प्राथमिकता शेड्यूलिंग',
+    'loyalty.otherGold': 'सहमति के साथ न्यूज़लेटर और सोशल मीडिया पर विशेष पहचान, साथ ही दानदाता के नज़दीक शिविरों तक जल्दी पहुँच',
+    'loyalty.tierElite': 'प्लाज़्मा एलीट',
+    'loyalty.threshElite': 'प्लाज़्मा या एफेरेसिस ट्रैक पर 6+ दान',
+    'loyalty.healthElite': '+ गोल्ड पैनल के साथ ECG और एक विटामिन व मिनरल पैनल, साथ ही दान-संबंधी जटिलताओं के लिए सूक्ष्म स्वास्थ्य-बीमा',
+    'loyalty.otherElite': 'VIP पहचान, दानदाता सलाहकार परिषद में सीट',
+    'loyalty.trackH': 'प्लाज़्मा एलीट एक अलग सीढ़ी है, ऊँचा पायदान नहीं',
+    'loyalty.trackP': 'एफेरेसिस दानदाता संपूर्ण-रक्त दानदाताओं की तुलना में सुरक्षित रूप से कहीं अधिक बार दान कर सकते हैं, इसलिए प्लेटफ़ॉर्म दोनों ट्रैक को स्वतंत्र रूप से गिनता है। जो दानदाता दोनों में योग्य है, उसे लाभ के लिए जो भी स्तर ऊँचा हो वही मिलता है।',
+    'loyalty.r1h': 'अवधि घूमती है, यह किसी तय तारीख़ पर रीसेट नहीं होती',
+    'loyalty.r1p': 'हर सत्यापित दान दानदाता के स्तर की गणना बीते 365 दिनों की गिनती से फिर से करता है, कैलेंडर वर्ष से नहीं। सीमा पार होते ही अपग्रेड लागू हो जाता है। डाउनग्रेड तभी लागू होता है जब 30 दिन बाद भी गिनती कम रहे, ताकि एक धीमा महीना दानदाता का स्तर न छीन ले।',
+    'loyalty.r2h': 'हर अधिकार की एक तारीख़ है, वह कभी जमा नहीं होता',
+    'loyalty.r2p': 'हर स्तर का जाँच लाभ 12-महीने के चक्र में एक बार जारी होता है, हर दान पर नहीं। इसे उसी चक्र के भीतर किसी साझेदार डायग्नोस्टिक केंद्र में बुक करना होता है, वरना यह समाप्त हो जाता है; अप्रयुक्त अधिकार आगे नहीं बढ़ते या जमा नहीं होते।',
+    'loyalty.r3h': 'दान की गिनती ब्लड बैंक से आती है, दानदाता से कभी नहीं',
+    'loyalty.r3p': 'कोई दान तभी स्तर की प्रगति में गिना जाता है जब कोई साझेदार ब्लड बैंक या शिविर उसे प्लेटफ़ॉर्म के ज़रिए पुष्ट करता है। ऐप में दानदाता जो कुछ भी दर्ज करे, वह उसका अपना स्तर नहीं बदल सकता।',
+    'loyalty.r4h': 'एक सत्यापित पहचान, एक दानदाता रिकॉर्ड',
+    'loyalty.r4p': 'पंजीकरण एक प्लेटफ़ॉर्म-सत्यापित पहचान (आधार e-KYC या समकक्ष) से जुड़ा होता है, जिसे संख्या के बजाय एक हैश्ड संदर्भ के रूप में सहेजा जाता है, ताकि दूसरा खाता बनाकर दानदाता की सीमा रीसेट न की जा सके। वही जाँच किसी दान को गिनने से रोकती है अगर वह पिछले दान के बाद अनिवार्य चिकित्सीय अंतराल के भीतर आता है, संपूर्ण रक्त के लिए 90 दिन, प्लाज़्मा के लिए एक छोटा, चिकित्सीय रूप से तय अंतराल।',
+    'loyalty.sampleH': 'ऐप के भीतर एक स्तर कैसे दिखता है',
+    'loyalty.sample1k': 'सिल्वर',
+    'loyalty.sample1d': 'आप एक सिल्वर दानदाता हैं। अपनी आधारभूत जाँच के अलावा, आपने एक मुफ़्त वार्षिक स्वास्थ्य पैनल और शिविरों में प्राथमिकता कतार अनलॉक कर ली है।',
+    'loyalty.sample2k': 'प्लाज़्मा एलीट',
+    'loyalty.sample2d': 'आप प्लाज़्मा एलीट हैं, हमारा सबसे प्रतिबद्ध दानदाता ट्रैक। आपका पूरा वार्षिक स्वास्थ्य पैकेज और दान-संबंधी सूक्ष्म-बीमा सक्रिय है।',
     'city.h2': 'पायलट कहाँ जाएगा',
     'city.lede': 'तीन उम्मीदवार, राज्य के मौजूदा ब्लड-बैंक घनत्व, महानगर जनसंख्या, और क्या यह ठीक यही लेनदेन पहले भी वहाँ हो चुका है, इनकी तुलना पर आधारित।',
     'city.thCity': 'शहर',
@@ -1131,14 +1407,14 @@
     'ask.calloutD': 'वेंचरX 2026, समस्या वक्तव्य 8: रक्त और प्लाज्मा आपूर्ति शृंखला<br>उद्यमिता प्रकोष्ठ, आईआईटी (आईएसएम) धनबाद',
     'sources.h2': 'स्रोत और कार्यप्रणाली',
     'sources.note': 'ऊपर दिए गए आँकड़े उद्धृत स्रोतों पर आधारित हैं। इस पेज पर दो आँकड़े स्पष्ट रूप से मॉडल किए गए हैं, स्रोत-आधारित नहीं, और जहाँ भी वे आते हैं वहाँ इनलाइन लेबल किए गए हैं: हब-स्तरीय समेकन से प्रति-यूनिट लागत में कमी, और ब्रेकईवन मात्रा का अनुमान लगाने के लिए इस्तेमाल की गई सात-वर्षीय सीधी-रेखा पूँजी परिशोधन। दोनों को पायलट द्वारा परखी जाने वाली धारणाओं के रूप में बताया गया है, दावों के रूप में नहीं।',
-    'footer.left': 'रक्तसेतु, एक वेंचरX 2026 प्रस्तुति',
+    'footer.left': 'रुधिर, एक वेंचरX 2026 प्रस्तुति',
     'footer.right': 'रक्त कभी नहीं बेचा जाता। केवल अतिरिक्त प्लाज्मा, एक NBTC-स्वीकृत माध्यम के तहत।',
   };
 
   const DYN_EN = { perUnit: 'per unit', copied: 'Copied', copyFailed: 'Copy failed, select manually', switchDark: 'Switch to dark mode', switchLight: 'Switch to light mode' };
   const DYN_HI = { perUnit: 'प्रति यूनिट', copied: 'कॉपी हो गया', copyFailed: 'कॉपी विफल, मैन्युअल रूप से चुनें', switchDark: 'डार्क मोड में बदलें', switchLight: 'लाइट मोड में बदलें' };
 
-  let CURRENT_LANG = localStorage.getItem('raktasetu-lang') === 'hi' ? 'hi' : 'en';
+  let CURRENT_LANG = localStorage.getItem('rudhira-lang') === 'hi' ? 'hi' : 'en';
   function tDyn(key) { return CURRENT_LANG === 'hi' ? DYN_HI[key] : DYN_EN[key]; }
   let recalcCalcRef = null;
 
@@ -1163,7 +1439,7 @@
     });
     const langBtn = document.getElementById('langToggle');
     if (langBtn) langBtn.textContent = lang === 'hi' ? 'EN' : 'हिं';
-    localStorage.setItem('raktasetu-lang', lang);
+    localStorage.setItem('rudhira-lang', lang);
     const themeBtn = document.getElementById('themeToggle');
     if (themeBtn) {
       const dark = themeBtn.classList.contains('is-dark');
@@ -1180,7 +1456,7 @@
   (function initTheme() {
     const root = document.documentElement;
     const btn = document.getElementById('themeToggle');
-    const stored = localStorage.getItem('raktasetu-theme');
+    const stored = localStorage.getItem('rudhira-theme');
     if (stored === 'light' || stored === 'dark') root.setAttribute('data-theme', stored);
 
     function effectiveDark() {
@@ -1197,11 +1473,11 @@
     btn.addEventListener('click', () => {
       const next = effectiveDark() ? 'light' : 'dark';
       root.setAttribute('data-theme', next);
-      localStorage.setItem('raktasetu-theme', next);
+      localStorage.setItem('rudhira-theme', next);
       syncButton();
     });
     window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
-      if (!localStorage.getItem('raktasetu-theme')) syncButton();
+      if (!localStorage.getItem('rudhira-theme')) syncButton();
     });
     syncButton();
   })();
