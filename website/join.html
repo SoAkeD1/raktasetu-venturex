@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Join as a Donor | Rudhira</title>
+<title>Join the Rudhira Network</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><circle cx=%2250%22 cy=%2250%22 r=%2248%22 fill=%22%23170404%22/><circle cx=%2250%22 cy=%2250%22 r=%2232%22 stroke=%22%23c81e3a%22 stroke-width=%226%22 fill=%22none%22 opacity=%220.5%22/><circle cx=%2250%22 cy=%2250%22 r=%2220%22 stroke=%22%23c81e3a%22 stroke-width=%226%22 fill=%22none%22 opacity=%220.75%22/><circle cx=%2250%22 cy=%2250%22 r=%229%22 fill=%22%23e02020%22/></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -51,21 +51,30 @@
 
   .card-wrap{flex:1; width:100%; display:flex; align-items:center; justify-content:center; padding:24px;}
   .card{
-    width:100%; max-width:440px; background:var(--surface); border:1px solid var(--line);
+    width:100%; max-width:480px; background:var(--surface); border:1px solid var(--line);
     border-radius:var(--radius); padding:32px; box-shadow:0 1px 2px rgba(0,0,0,.04);
+  }
+  .concept-badge{
+    display:inline-block; font-size:11px; font-weight:600; letter-spacing:.04em; text-transform:uppercase;
+    color:var(--ink-soft); background:var(--surface-2); border:1px solid var(--line);
+    border-radius:999px; padding:4px 10px; margin-bottom:14px;
   }
   .card h1{font-size:22px; margin:0 0 4px;}
   .card .lede{color:var(--ink-soft); font-size:14px; margin:0 0 24px;}
 
   .tabs{display:flex; border:1px solid var(--line); border-radius:10px; padding:3px; margin-bottom:24px;}
   .tab-btn{
-    flex:1; background:none; border:none; padding:9px 0; border-radius:8px;
-    font-family:var(--font-sans); font-size:14px; font-weight:600; color:var(--ink-soft); cursor:pointer;
+    flex:1; background:none; border:none; padding:9px 4px; border-radius:8px;
+    font-family:var(--font-sans); font-size:13px; font-weight:600; color:var(--ink-soft); cursor:pointer;
   }
   .tab-btn.active{background:var(--accent); color:var(--accent-ink);}
 
+  .role-form{display:none;}
+  .role-form.active{display:block;}
+
   .field{margin-bottom:16px;}
   .field label{display:block; font-size:13px; font-weight:600; color:var(--ink-soft); margin-bottom:6px;}
+  .field .hint{font-weight:400; color:var(--ink-faint); margin-left:4px;}
   .field input, .field select{
     width:100%; padding:10px 12px; border:1px solid var(--line); border-radius:8px;
     background:var(--surface); color:var(--ink); font-family:var(--font-sans); font-size:14px;
@@ -76,14 +85,10 @@
     width:100%; padding:11px 0; border:none; border-radius:8px; background:var(--accent);
     color:var(--accent-ink); font-family:var(--font-sans); font-size:14px; font-weight:600; cursor:pointer;
   }
-  .btn-primary:disabled{opacity:.6; cursor:default;}
-  .btn-google{
-    width:100%; padding:10px 0; border:1px solid var(--line); border-radius:8px; background:var(--surface);
-    color:var(--ink); font-family:var(--font-sans); font-size:14px; font-weight:600; cursor:pointer;
-    display:flex; align-items:center; justify-content:center; gap:10px; margin-top:10px;
+  .btn-secondary{
+    width:100%; padding:10px 0; border:1px solid var(--line); border-radius:8px; background:transparent;
+    color:var(--ink); font-family:var(--font-sans); font-size:14px; font-weight:600; cursor:pointer; margin-top:10px;
   }
-  .divider{display:flex; align-items:center; gap:12px; color:var(--ink-faint); font-size:12px; margin:20px 0;}
-  .divider::before, .divider::after{content:''; flex:1; height:1px; background:var(--line);}
 
   .error-text{color:var(--bad); font-size:13px; margin:-8px 0 16px; display:none;}
   .error-text.show{display:block;}
@@ -93,7 +98,7 @@
   .welcome dd{margin:0; font-weight:600;}
   .status-line{background:var(--surface-2); border-radius:10px; padding:14px 16px; font-size:13px; color:var(--ink-soft); margin-bottom:20px;}
   .link-row{display:flex; justify-content:space-between; margin-top:20px; font-size:13px;}
-  .link-row a{color:var(--accent); text-decoration:none; font-weight:600;}
+  .link-row a{color:var(--accent); text-decoration:none; font-weight:600; cursor:pointer;}
 
   .screen{display:none;}
   .screen.active{display:block;}
@@ -115,77 +120,73 @@
 <div class="card-wrap">
   <div class="card">
 
-    <div class="screen active" id="screen-auth">
-      <h1>Join Rudhira</h1>
-      <p class="lede">Create a donor account, or log back in.</p>
+    <div class="screen active" id="screen-join">
+      <span class="concept-badge">Concept preview &middot; not a live signup</span>
+      <h1>Join the Rudhira network</h1>
+      <p class="lede">Rudhira connects three sides of the blood and plasma supply chain. See how each one would sign up.</p>
 
       <div class="tabs" role="tablist">
-        <button class="tab-btn active" id="tab-signup" type="button" role="tab" aria-selected="true">Sign Up</button>
-        <button class="tab-btn" id="tab-login" type="button" role="tab" aria-selected="false">Log In</button>
+        <button class="tab-btn active" id="tab-donor" type="button" role="tab" aria-selected="true">Blood Donor</button>
+        <button class="tab-btn" id="tab-hospital" type="button" role="tab" aria-selected="false">Hospital</button>
+        <button class="tab-btn" id="tab-fractionator" type="button" role="tab" aria-selected="false">Plasma Fractionator</button>
       </div>
 
-      <form id="form-signup" novalidate>
-        <div class="field"><label for="su-name">Name</label><input id="su-name" name="name" type="text" required></div>
-        <div class="field"><label for="su-email">Email</label><input id="su-email" name="email" type="email" required></div>
-        <div class="field"><label for="su-age">Age</label><input id="su-age" name="age" type="number" min="1" max="120" required></div>
+      <form class="role-form active" id="form-donor" data-role="donor" novalidate>
+        <div class="field"><label for="d-name">Name</label><input id="d-name" name="name" type="text" required></div>
+        <div class="field"><label for="d-email">Email</label><input id="d-email" name="email" type="email" required></div>
+        <div class="field"><label for="d-age">Age</label><input id="d-age" name="age" type="number" min="1" max="120" required></div>
         <div class="field">
-          <label for="su-bloodgroup">Blood Group</label>
-          <select id="su-bloodgroup" name="bloodGroup" required>
+          <label for="d-bloodgroup">Blood Group</label>
+          <select id="d-bloodgroup" name="bloodGroup" required>
             <option value="" disabled selected>Select your blood group</option>
             <option>A+</option><option>A-</option><option>B+</option><option>B-</option>
             <option>O+</option><option>O-</option><option>AB+</option><option>AB-</option>
           </select>
         </div>
-        <div class="field"><label for="su-password">Password</label><input id="su-password" name="password" type="password" minlength="6" required></div>
-        <div class="field"><label for="su-confirm">Confirm Password</label><input id="su-confirm" name="confirm" type="password" minlength="6" required></div>
-        <p class="error-text" id="su-error"></p>
-        <button class="btn-primary" id="su-submit" type="submit">Create account</button>
+        <p class="error-text" id="d-error"></p>
+        <button class="btn-primary" type="submit">Preview donor sign-up</button>
       </form>
 
-      <form id="form-login" novalidate style="display:none;">
-        <div class="field"><label for="li-email">Email</label><input id="li-email" name="email" type="email" required></div>
-        <div class="field"><label for="li-password">Password</label><input id="li-password" name="password" type="password" required></div>
-        <p class="error-text" id="li-error"></p>
-        <button class="btn-primary" id="li-submit" type="submit">Log in</button>
-      </form>
-
-      <div class="divider">or</div>
-      <button class="btn-google" id="google-btn" type="button">
-        <svg width="18" height="18" viewBox="0 0 18 18"><path fill="#4285F4" d="M17.64 9.2c0-.64-.06-1.25-.16-1.84H9v3.48h4.84c-.21 1.13-.85 2.09-1.81 2.73v2.27h2.92c1.71-1.57 2.69-3.88 2.69-6.64z"/><path fill="#34A853" d="M9 18c2.43 0 4.47-.8 5.96-2.17l-2.92-2.27c-.81.54-1.84.86-3.04.86-2.34 0-4.32-1.58-5.03-3.71H.96v2.34C2.44 15.98 5.48 18 9 18z"/><path fill="#FBBC05" d="M3.97 10.71c-.18-.54-.28-1.11-.28-1.71s.1-1.17.28-1.71V4.95H.96A8.996 8.996 0 0 0 0 9c0 1.45.35 2.83.96 4.05l3.01-2.34z"/><path fill="#EA4335" d="M9 3.58c1.32 0 2.51.45 3.44 1.35l2.59-2.59C13.46.89 11.43 0 9 0 5.48 0 2.44 2.02.96 4.95l3.01 2.34C4.68 5.16 6.66 3.58 9 3.58z"/></svg>
-        Continue with Google
-      </button>
-      <p class="error-text" id="google-error"></p>
-    </div>
-
-    <div class="screen" id="screen-complete">
-      <h1>One more step</h1>
-      <p class="lede">We just need your blood group and age to finish setting up your donor account.</p>
-      <form id="form-complete" novalidate>
-        <div class="field"><label for="pc-age">Age</label><input id="pc-age" name="age" type="number" min="1" max="120" required></div>
-        <div class="field">
-          <label for="pc-bloodgroup">Blood Group</label>
-          <select id="pc-bloodgroup" name="bloodGroup" required>
-            <option value="" disabled selected>Select your blood group</option>
-            <option>A+</option><option>A-</option><option>B+</option><option>B-</option>
-            <option>O+</option><option>O-</option><option>AB+</option><option>AB-</option>
+      <form class="role-form" id="form-hospital" data-role="hospital" novalidate>
+        <div class="field"><label for="h-name">Hospital name</label><input id="h-name" name="hospitalName" type="text" required></div>
+        <div class="field"><label for="h-email">Registered email</label><input id="h-email" name="email" type="email" required></div>
+        <div class="field"><label for="h-regid">NABH / registration ID<span class="hint">(any hospital license number)</span></label><input id="h-regid" name="regId" type="text" required></div>
+        <div class="field"><label for="h-city">Nearest Rudhira hub</label>
+          <select id="h-city" name="city" required>
+            <option value="" disabled selected>Select a city</option>
+            <option>Nagpur</option><option>Pune</option><option>Delhi NCR</option>
+            <option>Bengaluru</option><option>Kolkata</option><option>Other</option>
           </select>
         </div>
-        <p class="error-text" id="pc-error"></p>
-        <button class="btn-primary" id="pc-submit" type="submit">Finish</button>
+        <p class="error-text" id="h-error"></p>
+        <button class="btn-primary" type="submit">Preview hospital sign-up</button>
+      </form>
+
+      <form class="role-form" id="form-fractionator" data-role="fractionator" novalidate>
+        <div class="field"><label for="f-name">Company name</label><input id="f-name" name="companyName" type="text" required></div>
+        <div class="field"><label for="f-email">Business email</label><input id="f-email" name="email" type="email" required></div>
+        <div class="field"><label for="f-type">Facility type</label>
+          <select id="f-type" name="facilityType" required>
+            <option value="" disabled selected>Select facility type</option>
+            <option>Licensed plasma fractionator</option>
+            <option>Plasma-derived medicine manufacturer</option>
+          </select>
+        </div>
+        <div class="field"><label for="f-volume">Monthly plasma requirement <span class="hint">(litres)</span></label><input id="f-volume" name="volume" type="number" min="1" required></div>
+        <p class="error-text" id="f-error"></p>
+        <button class="btn-primary" type="submit">Preview fractionator sign-up</button>
       </form>
     </div>
 
     <div class="screen welcome" id="screen-welcome">
+      <span class="concept-badge">Concept preview &middot; not a live signup</span>
       <h1 id="welcome-heading">Welcome</h1>
-      <dl>
-        <dt>Blood Group</dt><dd id="w-bloodgroup"></dd>
-        <dt>Age</dt><dd id="w-age"></dd>
-        <dt>Email</dt><dd id="w-email"></dd>
-      </dl>
-      <p class="status-line" id="w-status">0 verified donations &mdash; donate once to unlock Bronze.</p>
+      <dl id="welcome-fields"></dl>
+      <p class="status-line" id="welcome-note"></p>
+      <button class="btn-secondary" id="preview-another">Preview another role</button>
       <div class="link-row">
         <a href="index.html">&larr; Back to Rudhira</a>
-        <a href="#" id="logout-link">Log out</a>
+        <span></span>
       </div>
     </div>
 
@@ -221,31 +222,100 @@
     syncButton();
   })();
 
-  (function initTabs(){
-    var tabSignup = document.getElementById('tab-signup');
-    var tabLogin = document.getElementById('tab-login');
-    var formSignup = document.getElementById('form-signup');
-    var formLogin = document.getElementById('form-login');
-    tabSignup.addEventListener('click', function(){
-      tabSignup.classList.add('active'); tabSignup.setAttribute('aria-selected','true');
-      tabLogin.classList.remove('active'); tabLogin.setAttribute('aria-selected','false');
-      formSignup.style.display = ''; formLogin.style.display = 'none';
-    });
-    tabLogin.addEventListener('click', function(){
-      tabLogin.classList.add('active'); tabLogin.setAttribute('aria-selected','true');
-      tabSignup.classList.remove('active'); tabSignup.setAttribute('aria-selected','false');
-      formLogin.style.display = ''; formSignup.style.display = 'none';
-    });
-  })();
-
   function showScreen(id){
     document.querySelectorAll('.screen').forEach(function(el){ el.classList.remove('active'); });
     document.getElementById(id).classList.add('active');
   }
 
-  document.getElementById('form-signup').addEventListener('submit', function(e){ e.preventDefault(); });
-  document.getElementById('form-login').addEventListener('submit', function(e){ e.preventDefault(); });
-  document.getElementById('form-complete').addEventListener('submit', function(e){ e.preventDefault(); });
+  (function initTabs(){
+    var tabs = {
+      donor: document.getElementById('tab-donor'),
+      hospital: document.getElementById('tab-hospital'),
+      fractionator: document.getElementById('tab-fractionator')
+    };
+    var forms = {
+      donor: document.getElementById('form-donor'),
+      hospital: document.getElementById('form-hospital'),
+      fractionator: document.getElementById('form-fractionator')
+    };
+    function selectRole(role){
+      Object.keys(tabs).forEach(function(key){
+        var isActive = key === role;
+        tabs[key].classList.toggle('active', isActive);
+        tabs[key].setAttribute('aria-selected', isActive ? 'true' : 'false');
+        forms[key].classList.toggle('active', isActive);
+      });
+    }
+    Object.keys(tabs).forEach(function(role){
+      tabs[role].addEventListener('click', function(){ selectRole(role); });
+    });
+  })();
+
+  var WELCOME_COPY = {
+    donor: function(f){
+      return {
+        heading: 'Welcome, ' + f.name,
+        fields: [
+          ['Blood Group', f.bloodGroup],
+          ['Age', f.age],
+          ['Email', f.email]
+        ],
+        note: 'In the full platform, you would now be part of Rudhira’s donor network — verified donations move you through the Bronze to Plasma Elite reward tiers.'
+      };
+    },
+    hospital: function(f){
+      return {
+        heading: 'Welcome, ' + f.hospitalName,
+        fields: [
+          ['Registration ID', f.regId],
+          ['Nearest hub', f.city],
+          ['Email', f.email]
+        ],
+        note: 'In the full platform, ' + f.hospitalName + ' would now be a verified receiving node in Rudhira’s hub-and-spoke network.'
+      };
+    },
+    fractionator: function(f){
+      return {
+        heading: 'Welcome, ' + f.companyName,
+        fields: [
+          ['Facility type', f.facilityType],
+          ['Monthly requirement', f.volume + ' L'],
+          ['Email', f.email]
+        ],
+        note: 'In the full platform, ' + f.companyName + ' would now be a verified buyer for Rudhira’s surplus recovered plasma.'
+      };
+    }
+  };
+
+  function renderWelcome(role, formData){
+    var copy = WELCOME_COPY[role](formData);
+    document.getElementById('welcome-heading').textContent = copy.heading;
+    document.getElementById('welcome-note').textContent = copy.note;
+    var dl = document.getElementById('welcome-fields');
+    dl.innerHTML = '';
+    copy.fields.forEach(function(pair){
+      var dt = document.createElement('dt'); dt.textContent = pair[0];
+      var dd = document.createElement('dd'); dd.textContent = pair[1];
+      dl.appendChild(dt); dl.appendChild(dd);
+    });
+    showScreen('screen-welcome');
+  }
+
+  ['form-donor', 'form-hospital', 'form-fractionator'].forEach(function(formId){
+    var form = document.getElementById(formId);
+    var role = form.getAttribute('data-role');
+    form.addEventListener('submit', function(e){
+      e.preventDefault();
+      var data = new FormData(form);
+      var formData = {};
+      data.forEach(function(value, key){ formData[key] = value; });
+      renderWelcome(role, formData);
+    });
+  });
+
+  document.getElementById('preview-another').addEventListener('click', function(){
+    showScreen('screen-join');
+  });
 </script>
 
 </body>
