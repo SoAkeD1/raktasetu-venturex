@@ -199,6 +199,18 @@
   @keyframes fadeUp{from{opacity:0; transform:translateY(8px);} to{opacity:1; transform:translateY(0);}}
   @media (prefers-reduced-motion: reduce){ .hero-cap{animation:none; opacity:1;} }
 
+  /* ---- Live wastage counter ---- */
+  .wastage-strip{background:var(--bad-bg); border-bottom:1px solid var(--line);}
+  .wastage-inner{display:flex; align-items:center; gap:12px; flex-wrap:wrap; padding:13px 24px; font-size:13.5px;}
+  .wastage-dot{width:8px; height:8px; border-radius:50%; background:var(--bad); flex:none; animation:wastagePulse 1.6s ease-in-out infinite;}
+  @keyframes wastagePulse{0%,100%{opacity:1;} 50%{opacity:.35;}}
+  @media (prefers-reduced-motion: reduce){ .wastage-dot{animation:none;} }
+  .wastage-label{color:var(--bad); font-weight:600;}
+  .wastage-num{font-family:var(--font-mono); font-weight:700; color:var(--bad); font-variant-numeric:tabular-nums; white-space:nowrap;}
+  .wastage-note{color:var(--ink-faint); font-size:12px; margin-left:auto;}
+  .wastage-note a{color:inherit;}
+  @media (max-width:640px){ .wastage-note{margin-left:0;} }
+
   /* ---- TL;DR ---- */
   .tldr{background:var(--surface-2); border-top:1px solid var(--line); border-bottom:1px solid var(--line);}
   .tldr-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:20px 40px; padding:24px 0;}
@@ -641,6 +653,17 @@
       </div>
     </div>
   </section>
+
+  <!-- LIVE WASTAGE COUNTER -->
+  <div class="wastage-strip">
+    <div class="wrap wastage-inner">
+      <span class="wastage-dot" aria-hidden="true"></span>
+      <span class="wastage-label" data-i18n="wastage.label">Plasma lost to expiry in India this year, estimated:</span>
+      <span class="wastage-num mono" id="wastageCount">0.0</span>
+      <span data-i18n="wastage.units">units</span>
+      <span class="wastage-note" data-i18n="wastage.note" data-i18n-html>Extrapolated from the 3,00,000+/year figure below, not a live feed &middot; <a href="https://english.newsnationtv.com/lifestyle/health-and-fitness/6-lakh-litres-of-blood-wasted-in-five-years-in-india-serious-loopholes-in-blood-banking-system-exposed-169373.html" target="_blank" rel="noopener">source</a></span>
+    </div>
+  </div>
 
   <!-- TLDR -->
   <div class="tldr">
@@ -1244,6 +1267,9 @@
     'hero.ctaGhost': 'अनुपालन का मामला पढ़ें',
     'hero.imgAlt': 'कोल्ड चेन भंडारण, प्रतिनिधि छवि',
     'hero.cap': 'जमा हुआ प्लाज्मा एक वर्ष तक अपना मूल्य बनाए रखता है। इसका अधिकांश हिस्सा कभी यह मौका ही नहीं पाता।',
+    'wastage.label': 'इस वर्ष भारत में समाप्ति के कारण गया अनुमानित प्लाज्मा:',
+    'wastage.units': 'यूनिट',
+    'wastage.note': 'नीचे दिए 3,00,000+/वर्ष आँकड़े से एक्सट्रापोलेटेड, कोई लाइव फ़ीड नहीं &middot; <a href="https://english.newsnationtv.com/lifestyle/health-and-fitness/6-lakh-litres-of-blood-wasted-in-five-years-in-india-serious-loopholes-in-blood-banking-system-exposed-169373.html" target="_blank" rel="noopener">स्रोत</a>',
     'tldr.1': 'दानकर्ता बिना भुगतान के स्वयंसेवक होते हैं। मरीज़ वही सरकार-सीमित शुल्क चुकाते हैं। रक्त कभी नहीं बेचा जाता।',
     'tldr.2': 'केवल वह प्लाज्मा बेचा जाता है जो पहले से अप्रयुक्त है और अपनी समाप्ति तिथि के करीब है, और वह भी एक लाइसेंस प्राप्त भारतीय फ्रैक्शनेटर को।',
     'tldr.3': 'अकेले इतना ही निजी-दर केंद्रों में प्रति यूनिट 21 रुपये के मार्जिन को 41 रुपये में बदल देता है। सरकारी-दर केंद्रों को अभी भी हब-स्तरीय मात्रा की आवश्यकता है।',
@@ -1577,6 +1603,24 @@
     });
     drawFlowLines();
   }
+
+  (function initWastageCounter() {
+    const el = document.getElementById('wastageCount');
+    if (!el) return;
+    const ANNUAL_UNITS = 300000;
+    function currentEstimate() {
+      const now = new Date();
+      const startOfYear = new Date(now.getFullYear(), 0, 1).getTime();
+      const endOfYear = new Date(now.getFullYear() + 1, 0, 1).getTime();
+      const fraction = (now.getTime() - startOfYear) / (endOfYear - startOfYear);
+      return fraction * ANNUAL_UNITS;
+    }
+    function render() {
+      el.textContent = currentEstimate().toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    }
+    render();
+    setInterval(render, REDUCE ? 3000 : 300);
+  })();
 
   (function initCalculator() {
     const inPRBC = document.getElementById('inPRBC');
