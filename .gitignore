@@ -1,1 +1,9 @@
 .gstack/
+
+# OS/editor cruft
+Thumbs.db
+.DS_Store
+
+# Office lock files
+~$*.pptx
+~$*.docx
